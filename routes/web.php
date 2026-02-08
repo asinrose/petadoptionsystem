@@ -6,6 +6,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/services/{service}', [App\Http\Controllers\PublicServiceController::class , 'show'])->name('services.show');
+
 /* |-------------------------------------------------------------------------- | Authenticated User Dashboard |-------------------------------------------------------------------------- */
 Route::middleware(['auth'])->group(function () {
 
@@ -16,7 +18,11 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('/profile', [ProfileController::class , 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class , 'update'])->name('profile.update');
-        Route::delete('/profile', [ProfileController::class , 'destroy'])->name('profile.destroy');    });
+        Route::delete('/profile', [ProfileController::class , 'destroy'])->name('profile.destroy');
+
+        Route::get('/pethome', [App\Http\Controllers\PetHomeController::class , 'index'])->name('pethome');
+        Route::post('/adoption/{pet}', [App\Http\Controllers\AdoptionController::class , 'store'])->name('adoption.store');
+    });
 
 /* |-------------------------------------------------------------------------- | Service Provider Dashboard |-------------------------------------------------------------------------- */
 Route::middleware(['auth', 'service_provider'])->group(function () {
@@ -28,6 +34,7 @@ Route::middleware(['auth', 'service_provider'])->group(function () {
 
         // Services Management
         Route::get('/service-provider/services', [App\Http\Controllers\ServiceProviderServiceController::class , 'index'])->name('service-provider.services.index');
-        Route::post('/service-provider/services', [App\Http\Controllers\ServiceProviderServiceController::class , 'store'])->name('service-provider.services.store');    });
+        Route::post('/service-provider/services', [App\Http\Controllers\ServiceProviderServiceController::class , 'store'])->name('service-provider.services.store');
+    });
 
 require __DIR__ . '/auth.php';

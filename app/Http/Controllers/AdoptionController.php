@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+use App\Models\Pet;
+use App\Models\AdoptionRequest;
+
+class AdoptionController extends Controller
+{
+    public function store(Request $request, $petId)
+    {
+        $pet = Pet::findOrFail($petId);
+
+        // Prevent owner from adopting their own pet
+        if ($pet->user_id === auth()->id()) {
+            return back()->with('error', 'You cannot adopt your own pet.');
+        }
+
+        // Check if already requested
+        $existingRequest = AdoptionRequest::where('user_id', auth()->id())
+            ->where('pet_id', $pet->id)
+            ->first();
+
+        if ($existingRequest) {
+            return back()->with('info', 'You have already requested to adopt this pet.');
+        }
+
+        AdoptionRequest::create([
+            'user_id' => auth()->id(),
+            'pet_id' => $pet->id,
+            'status' => 'pending',
+            'request_date' => now(),
+        ]);
+
+        return back()->with('success', 'Adoption request sent successfully!');
+    }
+}

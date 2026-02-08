@@ -323,7 +323,7 @@
                         </div>
                         <h3>Pet Adoption</h3>
                         <p>Browse hundreds of adoptable pets. Filter by breed, age, and location to find your perfect match.</p>
-                        <a href="#" class="btn btn-outline-primary rounded-pill mt-3 px-4">
+                        <a href="{{ route('services.show', 'adoption') }}" class="btn btn-outline-primary rounded-pill mt-3 px-4">
     Read More
 </a>
 
@@ -336,7 +336,7 @@
                         </div>
                         <h3>Pet Care Services</h3>
                         <p>Professional grooming, training, and veterinary services from verified providers in your area.</p>
-                        <a href="#" class="btn btn-outline-primary rounded-pill mt-3 px-4">
+                        <a href="{{ route('services.show', 'care') }}" class="btn btn-outline-primary rounded-pill mt-3 px-4">
     Read More
 </a>
 
@@ -349,7 +349,7 @@
                         </div>
                         <h3>Community</h3>
                         <p>Join our vibrant community of pet lovers. Share stories, tips, and connect with others.</p>
-                        <a href="#" class="btn btn-outline-primary rounded-pill mt-3 px-4">
+                        <a href="{{ route('services.show', 'community') }}" class="btn btn-outline-primary rounded-pill mt-3 px-4">
     Read More
 </a>
 
