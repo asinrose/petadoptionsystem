@@ -22,6 +22,15 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('/pethome', [App\Http\Controllers\PetHomeController::class , 'index'])->name('pethome');
         Route::post('/adoption/{pet}', [App\Http\Controllers\AdoptionController::class , 'store'])->name('adoption.store');
+
+        // Service List & Booking
+        Route::get('/services-list', [App\Http\Controllers\ServiceListController::class , 'index'])->name('services.index');
+        Route::post('/services/book', [App\Http\Controllers\ServiceListController::class , 'book'])->name('services.book');
+
+        // Community
+        Route::get('/community', [App\Http\Controllers\CommunityController::class , 'index'])->name('community.index');
+        Route::post('/community', [App\Http\Controllers\CommunityController::class , 'store'])->name('community.store');
+        Route::post('/community/{post}/comment', [App\Http\Controllers\CommunityController::class , 'comment'])->name('community.comment');
     });
 
 /* |-------------------------------------------------------------------------- | Service Provider Dashboard |-------------------------------------------------------------------------- */

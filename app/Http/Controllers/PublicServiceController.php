@@ -33,7 +33,7 @@ class PublicServiceController extends Controller
                 ],
                 'image' => 'https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
                 'cta' => 'Find a Sitter',
-                'cta_link' => auth()->check() ? route('pethome') : route('register'),
+                'cta_link' => auth()->check() ? route('services.index') : route('register'),
             ],
             'community' => [
                 'title' => 'Pet Community',
@@ -46,7 +46,7 @@ class PublicServiceController extends Controller
                 ],
                 'image' => 'https://images.unsplash.com/photo-1534361960057-19889db9621e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
                 'cta' => 'Join the Community',
-                'cta_link' => auth()->check() ? route('pethome') : route('register'),
+                'cta_link' => auth()->check() ? route('community.index') : route('register'),
             ],
         ];
 

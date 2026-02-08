@@ -20,6 +20,11 @@ class PetService extends Model
 
     public function serviceProvider()
     {
-        return $this->belongsTo(ServiceProvider::class);
+        return $this->belongsTo(ServiceProvider::class , 'service_provider_id');
+    }
+
+    public function provider()
+    {
+        return $this->belongsTo(ServiceProvider::class , 'service_provider_id');
     }
 }

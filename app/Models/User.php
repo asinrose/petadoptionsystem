@@ -73,4 +73,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(ServiceProvider::class);
     }
+
+    public function pets()
+    {
+        return $this->hasMany(Pet::class);
+    }
 }
