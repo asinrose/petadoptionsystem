@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Pet Adoption System') }}</title>
+    <title>{{ config('app.name', 'PetPal') }}</title>
 
     <!-- Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -67,7 +67,7 @@
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">
-                <i class="fas fa-paw me-2"></i>PetAdoption
+                <i class="fas fa-paw me-2"></i>PetPal
             </a>
 
             <button class="navbar-toggler" type="button"

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ config('app.name', 'Pet Adoption System') }}</title>
+    <title>{{ config('app.name', 'PetPal') }}</title>
 
 
     <!-- Fonts -->
@@ -223,7 +223,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#"><i class="fas fa-paw me-2"></i>PetAdoption</a>
+            <a class="navbar-brand" href="#"><i class="fas fa-paw me-2"></i>PetPal</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -294,7 +294,7 @@
                         <div class="icon-box">
                             <i class="fas fa-dog"></i>
                         </div>
-                        <h3>Pet Adoption</h3>
+                        <h3>PetPal</h3>
                         <p>Browse hundreds of adoptable pets. Filter by breed, age, and location to find your perfect match.</p>
                         <a href="{{ route('services.show', 'adoption') }}" class="btn btn-outline-primary rounded-pill mt-3 px-4">
     Read More
@@ -384,7 +384,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4 mb-4">
-                    <h4 class="fw-bold mb-3"><i class="fas fa-paw me-2"></i>PetAdoption</h4>
+                    <h4 class="fw-bold mb-3"><i class="fas fa-paw me-2"></i>PetPal</h4>
                     <p class="text-white-50">Making the world a better place, one paw at a time. Join us in our mission to find every pet a loving home.</p>
                 </div>
                 <div class="col-md-4 mb-4">
@@ -411,7 +411,7 @@
             </div>
             <hr class="border-secondary my-4">
             <div class="text-center text-white-50">
-                &copy; {{ date('Y') }} Pet Adoption System. All rights reserved.
+                &copy; {{ date('Y') }} PetPal. All rights reserved.
             </div>
         </div>
     </footer>

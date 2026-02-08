@@ -17,6 +17,12 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        if ($request->user()->role === 'service_provider') {
+            return view('service_provider.profile.edit', [
+                'user' => $request->user(),
+            ]);
+        }
+
         return view('profile.edit', [
             'user' => $request->user(),
         ]);
@@ -41,8 +47,8 @@ class ProfileController extends Controller
             }
 
             // Store new photo
-           $user->profile_photo =
-    $request->file('profile_photo')->store('profile-photos', 'public');
+            $user->profile_photo =
+                $request->file('profile_photo')->store('profile-photos', 'public');
         }
 
         // Reset email verification if email changed
