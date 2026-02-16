@@ -12,6 +12,14 @@ class PetHomeController extends Controller
     {
         $query = Pet::where('status', 'available');
 
+        // Filter out system pets (where user_id is null)
+        $query->whereNotNull('user_id');
+
+        // Filter out own pets
+        if (auth()->check()) {
+            $query->where('user_id', '!=', auth()->id());
+        }
+
         // Search by name or breed
         if ($request->has('search') && $request->search != '') {
             $search = $request->search;

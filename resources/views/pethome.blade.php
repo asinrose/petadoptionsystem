@@ -44,7 +44,7 @@
             <div class="col-md-6 col-lg-4">
                 <div class="card h-100 shadow-sm border-0 overflow-hidden">
                     <div class="position-relative">
-                        <img src="{{ $pet->image ? $pet->image : 'https://placehold.co/600x400?text=No+Image' }}" class="card-img-top" alt="{{ $pet->name }}" style="height: 250px; object-fit: cover;">
+                        <img src="{{ $pet->image ? asset('storage/'.$pet->image) : 'https://placehold.co/600x400?text=No+Image' }}" class="card-img-top" alt="{{ $pet->name }}" style="height: 250px; object-fit: cover;">
                         <span class="position-absolute top-0 end-0 m-3 badge bg-white text-primary shadow-sm px-3 py-2 rounded-pill">
                             {{ ucfirst($pet->status) }}
                         </span>
@@ -54,7 +54,25 @@
                             <h3 class="h4 fw-bold mb-0">{{ $pet->name }}</h3>
                             <span class="text-muted small"><i class="fas fa-map-marker-alt me-1"></i> {{ $pet->location ?? 'Unknown' }}</span>
                         </div>
-                        <p class="text-muted mb-3">{{ $pet->breed }} &bull; {{ $pet->age }} years &bull; {{ ucfirst($pet->gender) }}</p>
+                        
+                        <div class="mb-3">
+                            @if($pet->vaccination_status == 'vaccinated')
+                                <span class="badge bg-success me-1">Vaccinated</span>
+                            @endif
+                            @if($pet->dewormed)
+                                <span class="badge bg-info me-1">Dewormed</span>
+                            @endif
+                            @if($pet->adoption_type == 'free')
+                                <span class="badge bg-primary">Free Adoption</span>
+                            @else
+                                <span class="badge bg-warning text-dark">Fee: ${{ number_format($pet->adoption_fee, 2) }}</span>
+                            @endif
+                        </div>
+
+                        <p class="text-muted mb-2">{{ $pet->breed }} &bull; {{ $pet->age }} years &bull; {{ ucfirst($pet->gender) }}</p>
+                        @if($pet->contact)
+                            <p class="text-muted mb-3"><i class="fas fa-phone-alt me-1"></i> {{ $pet->contact }}</p>
+                        @endif
                         <p class="card-text text-muted mb-4 line-clamp-2">{{ \Illuminate\Support\Str::limit($pet->description, 80) }}</p>
                         
                         <div class="d-grid">

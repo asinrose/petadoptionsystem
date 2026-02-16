@@ -17,19 +17,24 @@ class ServiceListController extends Controller
             $query->where('name', 'like', '%' . $request->service_type . '%');
         }
 
-        if ($request->filled('date') && $request->filled('time')) {
+        if ($request->filled('date') && $request->filled('start_time') && $request->filled('end_time')) {
             $date = $request->date;
-            $time = $request->time;
+            $startTime = $request->start_time;
+            $endTime = $request->end_time;
 
-            // correct logic: Filter services where the provider is NOT booked at this time
-            $query->whereHas('provider', function ($q) use ($date, $time) {
-                $q->whereDoesntHave('serviceBookings', function ($b) use ($date, $time) {
+            // correct logic: Filter services where the provider is NOT booked in this time range
+            $query->whereHas('provider', function ($q) use ($date, $startTime, $endTime) {
+                $q->whereDoesntHave('serviceBookings', function ($b) use ($date, $startTime, $endTime) {
                         $b->where('date', $date)
-                            ->where('time', $time)
-                            ->where('status', '!=', 'cancelled');
+                            ->where('status', '!=', 'cancelled')
+                            ->where(function ($query) use ($startTime, $endTime) {
+                        $query->where('start_time', '<', $endTime)
+                            ->where('end_time', '>', $startTime);
                     }
                     );
-                });
+                }
+                );
+            });
         }
 
         $services = $query->latest()->paginate(9);
@@ -44,22 +49,48 @@ class ServiceListController extends Controller
         $request->validate([
             'service_id' => 'required|exists:pet_services,id',
             'date' => 'required|date|after:today',
-            'time' => 'required',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'required|date_format:H:i|after:start_time',
             'pet_id' => 'required|exists:pets,id',
+            'phone' => 'required|string',
+            'address' => 'required|string',
+            'notes' => 'nullable|string',
         ]);
 
         $service = PetService::findOrFail($request->service_id);
+        $startTime = $request->start_time;
+        $endTime = $request->end_time;
 
-        // Double Booking Check
+        // Double Booking Check (Time Range Overlap)
+        // Existing booking overlaps if: (StartA < EndB) and (EndA > StartB)
         $exists = ServiceBooking::where('provider_id', $service->service_provider_id)
             ->where('date', $request->date)
-            ->where('time', $request->time)
             ->where('status', '!=', 'cancelled')
+            ->where(function ($query) use ($startTime, $endTime) {
+            $query->where('start_time', '<', $endTime)
+                ->where('end_time', '>', $startTime);
+        })
             ->exists();
 
         if ($exists) {
-            return back()->with('error', 'This slot is already booked. Please choose another time.');
+            return back()->with('error', 'The provider is not available during this time slot. Please choose another time.');
         }
+
+        // Calculate Price based on duration in minutes
+        $start = \Carbon\Carbon::parse($startTime);
+        $end = \Carbon\Carbon::parse($endTime);
+        $durationMinutes = $end->diffInMinutes($start);
+
+        // Price per minute = (Service Price / Service Duration) OR simply assume Service Price is per hour?
+        // User request: "confirm booking per hour the price should increase in total amount"
+        // Interpretation: Service Price is likely "per service unit" (which might be 1 hour or fixed).
+        // Let's assume the base price is per hour for now, or scale it.
+        // If the service has a `duration_minutes` (e.g. 60), then `price` covers that duration.
+        // Rate per minute = price / duration_minutes.
+        // Total Price = Rate per minute * Booking Duration.
+
+        $pricePerMinute = $service->price / ($service->duration_minutes ?: 60); // Avoid division by zero, default to 60 if null
+        $totalPrice = $pricePerMinute * $durationMinutes;
 
         ServiceBooking::create([
             'user_id' => Auth::id(),
@@ -67,8 +98,13 @@ class ServiceListController extends Controller
             'service_id' => $service->id,
             'pet_id' => $request->pet_id,
             'date' => $request->date,
-            'time' => $request->time,
+            'start_time' => $startTime,
+            'end_time' => $endTime,
             'status' => 'booked',
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'notes' => $request->notes,
+            'total_price' => round($totalPrice, 2),
         ]);
 
         return redirect()->route('services.index')->with('success', 'Service booked successfully!');

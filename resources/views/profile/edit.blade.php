@@ -122,7 +122,7 @@
                         <i class="fas fa-user"></i> User info
                     </a>
                     <a href="#"><i class="far fa-heart"></i> Favorites</a>
-                    <a href="#"><i class="far fa-plus"></i> Add pet</a>
+                    <a href="{{ route('pets.create') }}"><i class="far fa-plus"></i> Add pet</a>
                     <a href="#"><i class="far fa-calendar-alt"></i> Booked Services</a>
                     <a href="#"><i class="fas fa-cog"></i> Settings</a>
                     <a href="#"><i class="far fa-bell"></i> Notifications</a>

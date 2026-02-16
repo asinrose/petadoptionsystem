@@ -23,6 +23,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/pethome', [App\Http\Controllers\PetHomeController::class , 'index'])->name('pethome');
         Route::post('/adoption/{pet}', [App\Http\Controllers\AdoptionController::class , 'store'])->name('adoption.store');
 
+        // Pet Management
+        Route::get('/pets/create', [App\Http\Controllers\PetController::class , 'create'])->name('pets.create');
+        Route::post('/pets', [App\Http\Controllers\PetController::class , 'store'])->name('pets.store');
+        Route::delete('/pets/{pet}', [App\Http\Controllers\PetController::class , 'destroy'])->name('pets.destroy');
+
         // Service List & Booking
         Route::get('/services-list', [App\Http\Controllers\ServiceListController::class , 'index'])->name('services.index');
         Route::post('/services/book', [App\Http\Controllers\ServiceListController::class , 'book'])->name('services.book');

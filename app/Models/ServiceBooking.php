@@ -15,8 +15,14 @@ class ServiceBooking extends Model
         'service_id',
         'pet_id',
         'date',
-        'time',
+        'date',
+        'start_time',
+        'end_time',
         'status',
+        'phone',
+        'address',
+        'notes',
+        'total_price',
     ];
 
     public function user()

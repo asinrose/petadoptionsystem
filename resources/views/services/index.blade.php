@@ -26,14 +26,25 @@
                             <input type="date" name="date" class="form-control rounded-pill" value="{{ request('date') }}" required>
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label small text-muted text-uppercase fw-bold">Time</label>
-                            <select name="time" class="form-select rounded-pill" required>
-                                <option value="">Select Time</option>
-                                @foreach(['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00'] as $t)
-                                    <option value="{{ $t }}" @selected(request('time') == $t)>{{ $t }}</option>
-                                @endforeach
-                            </select>
+                        <div class="row g-2 mb-3">
+                            <div class="col-6">
+                                <label class="form-label small text-muted text-uppercase fw-bold">From</label>
+                                <select name="start_time" class="form-select rounded-pill" required>
+                                    <option value="">Start</option>
+                                    @foreach(['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00'] as $t)
+                                        <option value="{{ $t }}" @selected(request('start_time') == $t)>{{ $t }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label small text-muted text-uppercase fw-bold">To</label>
+                                <select name="end_time" class="form-select rounded-pill" required>
+                                    <option value="">End</option>
+                                    @foreach(['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00'] as $t)
+                                        <option value="{{ $t }}" @selected(request('end_time') == $t)>{{ $t }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
 
                         <button type="submit" class="btn btn-primary w-100 rounded-pill fw-bold">
@@ -90,10 +101,10 @@
 
                                     <button type="button" 
                                             class="btn btn-outline-primary w-100 rounded-pill"
-                                            @disabled(!(request('date') && request('time')))
+                                            @disabled(!(request('date') && request('start_time') && request('end_time')))
                                             data-bs-toggle="modal" 
                                             data-bs-target="#bookModal{{ $service->id }}">
-                                        {{ (request('date') && request('time')) ? 'Book Now' : 'Select Date & Time' }}
+                                        {{ (request('date') && request('start_time') && request('end_time')) ? 'Book Now' : 'Select Date & Time' }}
                                     </button>
                                 </div>
                             </div>
@@ -107,7 +118,8 @@
                                         @csrf
                                         <input type="hidden" name="service_id" value="{{ $service->id }}">
                                         <input type="hidden" name="date" value="{{ request('date') }}">
-                                        <input type="hidden" name="time" value="{{ request('time') }}">
+                                        <input type="hidden" name="start_time" value="{{ request('start_time') }}">
+                                        <input type="hidden" name="end_time" value="{{ request('end_time') }}">
                                         
                                         <div class="modal-header border-0">
                                             <h5 class="modal-title fw-bold">Confirm Booking</h5>
@@ -122,23 +134,62 @@
                                                 </div>
                                                 <div>
                                                     <small class="text-muted d-block uppercase">Time</small>
-                                                    <strong>{{ request('time') }}</strong>
+                                                    <strong>{{ request('start_time') }} - {{ request('end_time') }}</strong>
                                                 </div>
                                                 <div class="text-end">
-                                                    <small class="text-muted d-block uppercase">Price</small>
+                                                    <small class="text-muted d-block uppercase">Price/Hr</small>
                                                     <strong class="text-primary">${{ $service->price }}</strong>
                                                 </div>
                                             </div>
 
-                                            <div class="mb-3">
+                                            <!-- <div class="mb-3">
                                                 <label class="form-label fw-bold">Select Pet</label>
                                                 <select name="pet_id" class="form-select rounded-pill" required>
                                                     <option value="">Choose a pet...</option>
                                                     @foreach($pets as $pet)
                                                         <option value="{{ $pet->id }}">{{ $pet->name }}</option>
                                                     @endforeach
-                                                    <!-- Fallback if user has no pets relation defined yet, need to check User model -->
                                                 </select>
+                                            </div> -->
+
+                                            <div class="row g-3 mb-3">
+                                                <div class="col-md-6">
+                                                    <label class="form-label small text-muted text-uppercase fw-bold">Name</label>
+                                                    <input type="text" class="form-control rounded-pill bg-light" value="{{ Auth::user()->name }}" readonly>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label small text-muted text-uppercase fw-bold">Email</label>
+                                                    <input type="email" class="form-control rounded-pill bg-light" value="{{ Auth::user()->email }}" readonly>
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label small text-muted text-uppercase fw-bold">Phone Number</label>
+                                                <input type="tel" name="phone" class="form-control rounded-pill" placeholder="Enter your phone number" required>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label small text-muted text-uppercase fw-bold">Address</label>
+                                                <textarea name="address" class="form-control rounded-4" rows="2" placeholder="Enter your full address" required></textarea>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label small text-muted text-uppercase fw-bold">Additional Notes (Optional)</label>
+                                                <textarea name="notes" class="form-control rounded-4" rows="2" placeholder="Any special instructions..."></textarea>
+                                            </div>
+
+                                            @php
+                                                $start = \Carbon\Carbon::parse(request('start_time'));
+                                                $end = \Carbon\Carbon::parse(request('end_time'));
+                                                $duration = $end->diffInMinutes($start);
+                                                $totalPrice = ($service->price / 60) * $duration;
+                                            @endphp
+                                            <div class="d-flex justify-content-between align-items-center bg-primary bg-opacity-10 p-3 rounded-4 mb-3">
+                                                <div>
+                                                    <span class="fw-bold text-primary d-block">Total Amount Payable</span>
+                                                    <small class="text-muted">For {{ $duration / 60 }} Hours</small>
+                                                </div>
+                                                <span class="h4 fw-bold text-primary mb-0">${{ number_format($totalPrice, 2) }}</span>
                                             </div>
                                         </div>
                                         <div class="modal-footer border-0">
