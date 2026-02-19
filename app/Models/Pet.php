@@ -18,6 +18,15 @@ class Pet extends Model
         'image',
         'location',
         'type',
+        'contact',
+        'weight',
+        'vaccination_status',
+        'vaccination_date',
+        'dewormed',
+        'medical_conditions',
+        'special_care_requirements',
+        'adoption_type',
+        'adoption_fee',
     ];
 
     public function user()

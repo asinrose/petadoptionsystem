@@ -60,10 +60,20 @@ class PetController extends Controller
         return redirect()->route('pethome')->with('success', 'Pet posted successfully!');
     }
 
+    public function myPets()
+    {
+        $pets = \App\Models\Pet::where('user_id', auth()->id())->latest()->get();
+        return view('pets.my_pets', compact('pets'));
+    }
+
     public function destroy(\App\Models\Pet $pet)
     {
         if ($pet->user_id !== auth()->id()) {
             abort(403);
+        }
+
+        if ($pet->image) {
+            \Illuminate\Support\Facades\Storage::disk('public')->delete($pet->image);
         }
 
         $pet->delete();
