@@ -52,4 +52,10 @@ Route::middleware(['auth', 'service_provider'])->group(function () {
         Route::post('/service-provider/services', [App\Http\Controllers\ServiceProviderServiceController::class , 'store'])->name('service-provider.services.store');
     });
 
+/* |-------------------------------------------------------------------------- | Admin Dashboard |-------------------------------------------------------------------------- */
+Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(function () {
+    Route::get('/admin/dashboard', [App\Http\Controllers\AdminController::class , 'index'])->name('admin.dashboard');
+    Route::get('/admin/users', [App\Http\Controllers\AdminController::class , 'users'])->name('admin.users');
+});
+
 require __DIR__ . '/auth.php';

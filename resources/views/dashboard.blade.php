@@ -295,7 +295,7 @@
                     <h1>Find Your New <br>Best Friend Today</h1>
                     <p>Connect with loving pets who need a home. We make pet adoption simple, secure, and joyful. Give a life a second chance.</p>
                     <div class="d-flex gap-3">
-                        <a href="{{ route('login') }}" class="btn btn-primary-custom btn-lg">Adopt a Pet</a>
+                        <a href="{{ route('services.show', 'adoption') }}" class="btn btn-primary-custom btn-lg">Adopt a Pet</a>
                         <a href="#services" class="btn btn-outline-secondary btn-lg rounded-pill px-4">Our Services</a>
                     </div>
                 </div>
