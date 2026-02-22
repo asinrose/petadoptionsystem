@@ -26,6 +26,7 @@ class User extends Authenticatable
         'email',
         'password',
         'profile_photo',
+        'contact',
         'role',
     ];
 
@@ -77,5 +78,10 @@ class User extends Authenticatable
     public function pets()
     {
         return $this->hasMany(Pet::class);
+    }
+
+    public function favorites()
+    {
+        return $this->belongsToMany(Pet::class , 'favorites')->withTimestamps();
     }
 }

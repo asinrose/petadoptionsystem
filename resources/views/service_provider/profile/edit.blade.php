@@ -180,7 +180,13 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label">Profile Photo</label>
+                            <label class="form-label">Contact Number</label>
+                            <input type="text" name="contact" class="form-control"
+                                   value="{{ old('contact', $user->contact) }}">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Profile photo(Shop's picture suggested)</label>
                             <input type="file" name="profile_photo" class="form-control">
                         </div>
                     </div>

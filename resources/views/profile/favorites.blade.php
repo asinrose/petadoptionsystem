@@ -69,33 +69,6 @@
         flex: 1;
     }
 
-    .profile-avatar {
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-        object-fit: cover;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-    }
-
-    .form-control {
-        border-radius: 10px;
-        padding: 12px;
-    }
-
-    .save-btn {
-        background: #ff6a3d;
-        color: #fff;
-        border-radius: 30px;
-        padding: 12px 50px;
-        border: none;
-        font-weight: 600;
-        box-shadow: 0 10px 25px rgba(255,106,61,0.35);
-    }
-
-    .save-btn:hover {
-        background: #ff5722;
-    }
-
     @media (max-width: 991px) {
         .profile-layout {
             flex-direction: column;
@@ -118,12 +91,10 @@
                 <h5>User Profile</h5>
 
                 <div class="profile-menu">
-                    <a href="#" class="active">
-                        <i class="fas fa-user"></i> User info
-                    </a>
+                    <a href="{{ route('profile.edit') }}"><i class="fas fa-user"></i> User info</a>
                     <a href="{{ route('pets.my_pets') }}"><i class="fas fa-paw"></i> My Pets</a>
-                    <a href="{{ route('profile.favorites') }}"><i class="far fa-heart"></i> Favorites</a>
-                    <a href="{{ route('pets.create') }}"><i class="far fa-plus"></i> Add pet</a>
+                    <a href="{{ route('profile.favorites') }}" class="active"><i class="fas fa-heart"></i> Favorites</a>
+                    <a href="{{ route('pets.create') }}"><i class="fas fa-plus"></i> Add pet</a>
                     <a href="#"><i class="far fa-calendar-alt"></i> Booked Services</a>
                     <a href="#"><i class="fas fa-cog"></i> Settings</a>
                     <a href="{{ route('profile.applications') }}"><i class="fas fa-paw"></i> Adoption Applications</a>
@@ -142,67 +113,53 @@
             <div class="profile-content">
 
                 @if(session('success'))
-                    <div class="alert alert-success">
+                    <div class="alert alert-success mb-4">
                         {{ session('success') }}
                     </div>
                 @endif
 
-                <!-- PROFILE HEADER -->
-                <div class="d-flex align-items-center mb-5">
-                    <img src="{{ $user->profile_photo
-                        ? asset('storage/'.$user->profile_photo)
-                        : 'https://ui-avatars.com/api/?name='.urlencode($user->name) }}"
-                         class="profile-avatar me-4">
+                <h4 class="fw-bold mb-4">My Favorite Pets</h4>
 
-                    <div>
-                        <h4 class="mb-1">{{ $user->name }}</h4>
-                        <p class="text-muted mb-0">{{ $user->email }}</p>
+                <div class="row g-4">
+                    
+                     @if($favorites->count() > 0)
+                    @foreach ($favorites as $pet)
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card h-100 shadow-sm border-0 overflow-hidden">
+                                <div class="position-relative">
+                                    <img src="{{ $pet->image ? asset('storage/'.$pet->image) : 'https://placehold.co/600x400?text=No+Image' }}" class="card-img-top" alt="{{ $pet->name }}" style="height: 200px; object-fit: cover;">
+                                    
+                                    <form action="{{ route('favorite.toggle', $pet->id) }}" method="POST" class="position-absolute top-0 start-0 m-2">
+                                        @csrf
+                                        <button type="submit" class="btn btn-light shadow-sm rounded-circle p-2 d-flex align-items-center justify-content-center border-0" style="width: 35px; height: 35px;" title="Remove from Favorites">
+                                            <i class="fas fa-heart text-danger fs-6"></i>
+                                        </button>
+                                    </form>
+                                    
+                                    <span class="position-absolute top-0 end-0 m-2 badge bg-white text-primary shadow-sm px-3 py-2 rounded-pill">
+                                        {{ ucfirst($pet->status) }}
+                                    </span>
+                                </div>
+                                <div class="card-body p-3">
+                                    <h5 class="fw-bold mb-1">{{ $pet->name }}</h5>
+                                    <p class="text-muted small mb-2">{{ $pet->breed }} &bull; {{ $pet->age }} years</p>
+                                    
+                                    <div class="d-grid mt-3">
+                                        <a href="{{ route('pets.show', $pet->id) }}" class="btn btn-primary-custom w-100 btn-sm pr-custom-btn-theme" style="background-color: #6a5acd; border-color: #6a5acd; color: white; padding: 10px; border-radius: 8px;">View / Adopt</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                @else
+                    <div class="col-12 text-center py-5">
+                        <div class="mb-3">
+                            <i class="far fa-heart text-muted" style="font-size: 3rem;"></i>
+                        </div>
+                        <h5 class="text-muted">You haven't liked any pets yet.</h5>
+                        <a href="{{ route('pethome') }}" class="btn btn-outline-primary mt-3">Find a Pet</a>
                     </div>
-                </div>
-
-                <!-- UPDATE FORM -->
-                <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
-                    @csrf
-                    @method('PATCH')
-
-                    <div class="row g-4">
-                        <div class="col-md-6">
-                            <label class="form-label">Full Name</label>
-                            <input type="text" name="name" class="form-control"
-                                   value="{{ old('name', $user->name) }}">
-                        </div>
-
-                        <div class="col-md-6">
-                            <label class="form-label">Email Address</label>
-                            <input type="email" name="email" class="form-control"
-                                   value="{{ old('email', $user->email) }}">
-                        </div>
-
-                        <div class="col-md-6">
-                            <label class="form-label">Contact Number</label>
-                            <input type="text" name="contact" class="form-control"
-                                   value="{{ old('contact', $user->contact) }}">
-                        </div>
-
-                        <div class="col-md-6">
-                            <label class="form-label">Profile Photo</label>
-                            <input type="file" name="profile_photo" class="form-control">
-                        </div>
-                    </div>
-
-                    <div class="mt-5 text-center">
-                        <button type="submit" class="save-btn">Save Changes</button>
-                    </div>
-                </form>
-
-                <!-- DELETE ACCOUNT -->
-                <div class="text-center mt-4">
-                    <form method="POST" action="{{ route('profile.destroy') }}"
-                          onsubmit="return confirm('Are you sure you want to delete your account?')">
-                        @csrf
-                        @method('DELETE')
-                        <button class="btn btn-link text-danger">Delete Account</button>
-                    </form>
+                @endif
                 </div>
 
             </div>

@@ -60,6 +60,11 @@ class PetController extends Controller
         return redirect()->route('pethome')->with('success', 'Pet posted successfully!');
     }
 
+    public function show(\App\Models\Pet $pet)
+    {
+        return view('pets.show', compact('pet'));
+    }
+
     public function myPets()
     {
         $pets = \App\Models\Pet::where('user_id', auth()->id())->latest()->get();

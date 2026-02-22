@@ -36,4 +36,17 @@ class AdoptionController extends Controller
 
         return back()->with('success', 'Adoption request sent successfully!');
     }
+
+    public function applications()
+    {
+        // Fetch all adoption requests where the pet belongs to the authenticated user
+        $applications = AdoptionRequest::whereHas('pet', function ($query) {
+            $query->where('user_id', auth()->id());
+        })
+            ->with('pet', 'user') // eager load related models
+            ->latest()
+            ->get();
+
+        return view('profile.applications', compact('applications'));
+    }
 }

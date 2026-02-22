@@ -24,6 +24,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/adoption/{pet}', [App\Http\Controllers\AdoptionController::class , 'store'])->name('adoption.store');
 
         // Pet Management
+        Route::get('/pets/{pet}/details', [App\Http\Controllers\PetController::class , 'show'])->name('pets.show');
         Route::get('/pets/create', [App\Http\Controllers\PetController::class , 'create'])->name('pets.create');
         Route::post('/pets', [App\Http\Controllers\PetController::class , 'store'])->name('pets.store');
         Route::get('/my-pets', [App\Http\Controllers\PetController::class , 'myPets'])->name('pets.my_pets');
@@ -37,6 +38,13 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/community', [App\Http\Controllers\CommunityController::class , 'index'])->name('community.index');
         Route::post('/community', [App\Http\Controllers\CommunityController::class , 'store'])->name('community.store');
         Route::post('/community/{post}/comment', [App\Http\Controllers\CommunityController::class , 'comment'])->name('community.comment');
+
+        // Favorites
+        Route::post('/favorites/{pet}', [App\Http\Controllers\FavoriteController::class , 'toggle'])->name('favorite.toggle');
+        Route::get('/profile/favorites', [App\Http\Controllers\FavoriteController::class , 'index'])->name('profile.favorites');
+
+        // Adoption Applications
+        Route::get('/profile/adoption-applications', [App\Http\Controllers\AdoptionController::class , 'applications'])->name('profile.applications');
     });
 
 /* |-------------------------------------------------------------------------- | Service Provider Dashboard |-------------------------------------------------------------------------- */

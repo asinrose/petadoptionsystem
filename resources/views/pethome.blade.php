@@ -48,6 +48,20 @@
                         <span class="position-absolute top-0 end-0 m-3 badge bg-white text-primary shadow-sm px-3 py-2 rounded-pill">
                             {{ ucfirst($pet->status) }}
                         </span>
+                        @auth
+                            @if(auth()->id() !== $pet->user_id)
+                                <form action="{{ route('favorite.toggle', $pet->id) }}" method="POST" class="position-absolute top-0 start-0 m-3">
+                                    @csrf
+                                    <button type="submit" class="btn btn-light shadow-sm rounded-circle p-2 d-flex align-items-center justify-content-center border-0" style="width: 40px; height: 40px;">
+                                        @if(auth()->user()->favorites()->where('pet_id', $pet->id)->exists())
+                                            <i class="fas fa-heart text-danger fs-5"></i>
+                                        @else
+                                            <i class="far fa-heart text-muted fs-5"></i>
+                                        @endif
+                                    </button>
+                                </form>
+                            @endif
+                        @endauth
                     </div>
                     <div class="card-body p-4">
                         <div class="d-flex justify-content-between align-items-center mb-2">
@@ -79,10 +93,7 @@
                             @if(auth()->id() === $pet->user_id)
                                 <button class="btn btn-secondary disabled" disabled>Your Post</button>
                             @else
-                                <form action="{{ route('adoption.store', $pet->id) }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="btn btn-primary-custom w-100">Adopt Me</button>
-                                </form>
+                                <a href="{{ route('pets.show', $pet->id) }}" class="btn btn-primary-custom w-100">Adopt Me / View Details</a>
                             @endif
                         </div>
                     </div>
