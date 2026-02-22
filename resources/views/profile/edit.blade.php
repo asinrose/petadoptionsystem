@@ -121,12 +121,15 @@
                     <a href="#" class="active">
                         <i class="fas fa-user"></i> User info
                     </a>
-                    <a href="{{ route('pets.my_pets') }}"><i class="fas fa-paw"></i> My Pets</a>
-                    <a href="{{ route('profile.favorites') }}"><i class="far fa-heart"></i> Favorites</a>
-                    <a href="{{ route('pets.create') }}"><i class="far fa-plus"></i> Add pet</a>
-                    <a href="#"><i class="far fa-calendar-alt"></i> Booked Services</a>
-                    <a href="#"><i class="fas fa-cog"></i> Settings</a>
-                    <a href="{{ route('profile.applications') }}"><i class="fas fa-paw"></i> Adoption Applications</a>
+                    
+                    @if(auth()->user()->role !== 'admin')
+                        <a href="{{ route('pets.my_pets') }}"><i class="fas fa-paw"></i> My Pets</a>
+                        <a href="{{ route('profile.favorites') }}"><i class="far fa-heart"></i> Favorites</a>
+                        <a href="{{ route('pets.create') }}"><i class="far fa-plus"></i> Add pet</a>
+                        <a href="{{ route('profile.booked_services') }}"><i class="far fa-calendar-alt"></i> Booked Services</a>
+                        <a href="#"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="{{ route('profile.applications') }}"><i class="fas fa-paw"></i> Adoption Applications</a>
+                    @endif
 
                     <!-- Logout trigger -->
                     <button type="button"

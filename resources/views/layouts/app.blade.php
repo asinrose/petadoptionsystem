@@ -7,6 +7,9 @@
 
     <title>{{ config('app.name', 'PetPal') }}</title>
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="{{ asset('petpal-paw.svg') }}">
+
     <!-- Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -86,6 +89,10 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('service-provider.services.index') }}">My Services</a>
+                            </li>
+                        @elseif(auth()->user()->role === 'admin')
+                            <li class="nav-item">
+                                <a class="nav-link fw-bold" href="{{ route('admin.dashboard') }}">Dashboard</a>
                             </li>
                         @else
                             <li class="nav-item">

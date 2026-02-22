@@ -45,25 +45,29 @@ Route::middleware(['auth'])->group(function () {
 
         // Adoption Applications
         Route::get('/profile/adoption-applications', [App\Http\Controllers\AdoptionController::class , 'applications'])->name('profile.applications');
+
+        // Booked Services
+        Route::get('/profile/booked-services', [ProfileController::class , 'bookedServices'])->name('profile.booked_services');
     });
 
 /* |-------------------------------------------------------------------------- | Service Provider Dashboard |-------------------------------------------------------------------------- */
 Route::middleware(['auth', 'service_provider'])->group(function () {
 
-    Route::get('/service-provider/dashboard', function () {
-            return view('service_provider.dashboard');
-        }
-        )->name('service-provider.dashboard');
+    Route::get('/service-provider/dashboard', [\App\Http\Controllers\ServiceProviderDashboardController::class , 'index'])->name('service-provider.dashboard');
+    Route::post('/service-provider/bookings/{booking}/confirm', [\App\Http\Controllers\ServiceProviderDashboardController::class , 'confirmBooking'])->name('service-provider.bookings.confirm');
 
-        // Services Management
-        Route::get('/service-provider/services', [App\Http\Controllers\ServiceProviderServiceController::class , 'index'])->name('service-provider.services.index');
-        Route::post('/service-provider/services', [App\Http\Controllers\ServiceProviderServiceController::class , 'store'])->name('service-provider.services.store');
-    });
+    // Services Management
+    Route::get('/service-provider/services', [App\Http\Controllers\ServiceProviderServiceController::class , 'index'])->name('service-provider.services.index');
+    Route::post('/service-provider/services', [App\Http\Controllers\ServiceProviderServiceController::class , 'store'])->name('service-provider.services.store');
+});
 
 /* |-------------------------------------------------------------------------- | Admin Dashboard |-------------------------------------------------------------------------- */
 Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(function () {
     Route::get('/admin/dashboard', [App\Http\Controllers\AdminController::class , 'index'])->name('admin.dashboard');
     Route::get('/admin/users', [App\Http\Controllers\AdminController::class , 'users'])->name('admin.users');
+    Route::get('/admin/pets', [App\Http\Controllers\AdminController::class , 'pets'])->name('admin.pets');
+    Route::delete('/admin/pets/{pet}', [App\Http\Controllers\AdminController::class , 'destroyPet'])->name('admin.pets.destroy');
+    Route::patch('/admin/pets/{pet}/status', [App\Http\Controllers\AdminController::class , 'updatePetStatus'])->name('admin.pets.update_status');
 });
 
 require __DIR__ . '/auth.php';

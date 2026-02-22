@@ -99,7 +99,7 @@
                     <a href="{{ route('admin.users') }}">
                         <i class="fas fa-users"></i> User Management
                     </a>
-                    <a href="#">
+                    <a href="{{ route('admin.pets') }}">
                         <i class="fas fa-paw"></i> Pet Management
                     </a>
                     <a href="#">

@@ -51,7 +51,7 @@ class ServiceListController extends Controller
             'date' => 'required|date|after:today',
             'start_time' => 'required|date_format:H:i',
             'end_time' => 'required|date_format:H:i|after:start_time',
-            'pet_id' => 'required|exists:pets,id',
+            'pet_id' => 'nullable|exists:pets,id',
             'phone' => 'required|string',
             'address' => 'required|string',
             'notes' => 'nullable|string',
@@ -79,7 +79,7 @@ class ServiceListController extends Controller
         // Calculate Price based on duration in minutes
         $start = \Carbon\Carbon::parse($startTime);
         $end = \Carbon\Carbon::parse($endTime);
-        $durationMinutes = $end->diffInMinutes($start);
+        $durationMinutes = $start->diffInMinutes($end);
 
         // Price per minute = (Service Price / Service Duration) OR simply assume Service Price is per hour?
         // User request: "confirm booking per hour the price should increase in total amount"

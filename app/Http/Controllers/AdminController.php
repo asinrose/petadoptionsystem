@@ -23,4 +23,29 @@ class AdminController extends Controller
         $users = User::latest()->paginate(10);
         return view('admin.users', compact('users'));
     }
+
+    public function pets()
+    {
+        $pets = Pet::with('user')->latest()->paginate(10);
+        return view('admin.pets', compact('pets'));
+    }
+
+    public function destroyPet(Pet $pet)
+    {
+        $pet->delete();
+        return redirect()->back()->with('success', 'Pet listing removed successfully!');
+    }
+
+    public function updatePetStatus(\Illuminate\Http\Request $request, Pet $pet)
+    {
+        $request->validate([
+            'status' => 'required|string|in:Available,Adopted,Lost,Found'
+        ]);
+
+        $pet->update([
+            'status' => $request->status
+        ]);
+
+        return redirect()->back()->with('success', 'Pet status updated successfully!');
+    }
 }

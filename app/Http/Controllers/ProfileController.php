@@ -63,6 +63,18 @@ class ProfileController extends Controller
     }
 
     /**
+     * Display the user's booked services.
+     */
+    public function bookedServices(Request $request): View
+    {
+        $bookings = $request->user()->serviceBookings()->with(['service', 'service.serviceProvider.user'])->latest()->get();
+
+        return view('profile.booked_services', [
+            'bookings' => $bookings,
+        ]);
+    }
+
+    /**
      * Delete the user's account.
      */
     public function destroy(Request $request): RedirectResponse

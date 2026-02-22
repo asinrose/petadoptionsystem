@@ -160,7 +160,7 @@
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
                         <p class="text-muted fw-bold small text-uppercase mb-1">Total Services</p>
-                        <h2 class="fw-bold mb-0">3</h2> <!-- Dynamic Data Here -->
+                        <h2 class="fw-bold mb-0">{{ $totalServices }}</h2> <!-- Dynamic Data Here -->
                     </div>
                     <div class="stat-icon bg-icon-primary">
                         <i class="fas fa-paw"></i>
@@ -179,7 +179,7 @@
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
                         <p class="text-muted fw-bold small text-uppercase mb-1">Pending Requests</p>
-                        <h2 class="fw-bold mb-0">12</h2> <!-- Dynamic Data Here -->
+                        <h2 class="fw-bold mb-0">{{ $pendingRequests }}</h2> <!-- Dynamic Data Here -->
                     </div>
                     <div class="stat-icon bg-icon-warning">
                         <i class="fas fa-clock"></i>
@@ -198,7 +198,7 @@
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
                         <p class="text-muted fw-bold small text-uppercase mb-1">Total Bookings</p>
-                        <h2 class="fw-bold mb-0">86</h2> <!-- Dynamic Data Here -->
+                        <h2 class="fw-bold mb-0">{{ $totalBookings }}</h2> <!-- Dynamic Data Here -->
                     </div>
                     <div class="stat-icon bg-icon-success">
                         <i class="fas fa-check-circle"></i>
@@ -222,52 +222,49 @@
                     <a href="#" class="btn btn-sm btn-light rounded-pill px-3 text-primary fw-bold">View All</a>
                 </div>
                 
+                @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show m-4" role="alert">
+                        <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                @endif
+                
                 <div class="p-0">
-                    <!-- Booking Item 1 -->
-                    <div class="recent-booking-item">
-                        <div class="avatar-circle bg-primary">JD</div>
-                        <div class="flex-grow-1">
-                            <h6 class="mb-0 fw-bold">John Doe</h6>
-                            <p class="text-muted small mb-0">Dog Walking • 2 hours</p>
+                    @forelse($recentBookings as $booking)
+                        @php
+                            $initials = collect(explode(' ', $booking->user->name))->map(function($segment) {
+                                return strtoupper(substr($segment, 0, 1));
+                            })->take(2)->join('');
+                            $colors = ['bg-primary', 'bg-info', 'bg-success', 'bg-warning', 'bg-danger'];
+                            $colorClass = $colors[crc32($booking->user->name) % count($colors)];
+                            
+                            $statusClassMap = [
+                                'booked' => 'status-pending',
+                                'confirmed' => 'status-confirmed',
+                                'completed' => 'status-completed'
+                            ];
+                            $badgeClass = $statusClassMap[$booking->status] ?? 'status-pending';
+                            
+                            $duration = \Carbon\Carbon::parse($booking->start_time)->diffInHours(\Carbon\Carbon::parse($booking->end_time));
+                        @endphp
+                    
+                        <div class="recent-booking-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#bookingModal{{ $booking->id }}">
+                            <div class="avatar-circle {{ $colorClass }}">{{ $initials }}</div>
+                            <div class="flex-grow-1">
+                                <h6 class="mb-0 fw-bold">{{ $booking->user->name }}</h6>
+                                <p class="text-muted small mb-0">{{ $booking->service->name }} • {{ $duration }} hours</p>
+                            </div>
+                            <div class="text-end">
+                                <div class="status-badge {{ $badgeClass }} mb-1">{{ $booking->status === 'booked' ? 'Pending' : ucfirst($booking->status) }}</div>
+                                <small class="text-muted d-block" style="font-size: 0.7rem;">{{ $booking->created_at->diffForHumans() }}</small>
+                            </div>
                         </div>
-                        <div class="text-end">
-                            <div class="status-badge status-pending mb-1">Pending</div>
-                            <small class="text-muted d-block" style="font-size: 0.7rem;">2 mins ago</small>
-                        </div>
-                    </div>
-
-                    <!-- Booking Item 2 -->
-                    <div class="recent-booking-item">
-                        <div class="avatar-circle bg-info">SJ</div>
-                        <div class="flex-grow-1">
-                            <h6 class="mb-0 fw-bold">Sarah Jenkins</h6>
-                            <p class="text-muted small mb-0">Pet Grooming • Full Package</p>
-                        </div>
-                        <div class="text-end">
-                            <div class="status-badge status-confirmed mb-1">Confirmed</div>
-                            <small class="text-muted d-block" style="font-size: 0.7rem;">1 hour ago</small>
-                        </div>
-                    </div>
-
-                    <!-- Booking Item 3 -->
-                    <div class="recent-booking-item">
-                        <div class="avatar-circle bg-success">MK</div>
-                        <div class="flex-grow-1">
-                            <h6 class="mb-0 fw-bold">Mike Kowalski</h6>
-                            <p class="text-muted small mb-0">Pet Sitting • Weekend</p>
-                        </div>
-                        <div class="text-end">
-                            <div class="status-badge status-completed mb-1">Completed</div>
-                            <small class="text-muted d-block" style="font-size: 0.7rem;">Yesterday</small>
-                        </div>
-                    </div>
-                     <!-- Empty State Placeholder (Hidden for now) -->
-                    <!-- 
+                    @empty
                     <div class="text-center py-5">
-                        <img src="{{ asset('images/empty-state.svg') }}" alt="No bookings" style="width: 150px; opacity: 0.5;">
+                        <i class="fas fa-calendar-times fa-3x text-muted mb-3 opacity-25"></i>
                         <p class="text-muted mt-3">No bookings yet.</p>
                     </div>
-                    -->
+                    @endforelse
                 </div>
             </div>
         </div>
@@ -306,4 +303,88 @@
         </div>
     </div>
 </div>
+
+<!-- Modals rendered outside of all containers to prevent z-index/overflow clipping issues -->
+@foreach($recentBookings as $booking)
+    @php
+        $initials = collect(explode(' ', $booking->user->name))->map(function($segment) {
+            return strtoupper(substr($segment, 0, 1));
+        })->take(2)->join('');
+        $colors = ['bg-primary', 'bg-info', 'bg-success', 'bg-warning', 'bg-danger'];
+        $colorClass = $colors[crc32($booking->user->name) % count($colors)];
+        
+        $statusClassMap = [
+            'booked' => 'status-pending',
+            'confirmed' => 'status-confirmed',
+            'completed' => 'status-completed'
+        ];
+        $badgeClass = $statusClassMap[$booking->status] ?? 'status-pending';
+    @endphp
+    <!-- Booking Details Modal -->
+    <div class="modal fade" id="bookingModal{{ $booking->id }}" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 rounded-4 shadow">
+                <div class="modal-header border-bottom">
+                    <h5 class="modal-title fw-bold">Booking Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="d-flex align-items-center mb-4 pb-3 border-bottom">
+                        <div class="avatar-circle {{ $colorClass }} me-3" style="width: 60px; height: 60px; font-size: 1.5rem;">{{ $initials }}</div>
+                        <div>
+                            <h5 class="fw-bold mb-1">{{ $booking->user->name }}</h5>
+                            <span class="status-badge {{ $badgeClass }}">{{ $booking->status === 'booked' ? 'Pending' : ucfirst($booking->status) }}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <label class="text-muted small text-uppercase fw-bold mb-1">Service</label>
+                            <p class="fw-bold mb-0">{{ $booking->service->name }}</p>
+                        </div>
+                        <div class="col-6">
+                            <label class="text-muted small text-uppercase fw-bold mb-1">Total Price</label>
+                            <p class="fw-bold text-primary mb-0">${{ number_format($booking->total_price, 2) }}</p>
+                        </div>
+                        <div class="col-6">
+                            <label class="text-muted small text-uppercase fw-bold mb-1">Date</label>
+                            <p class="mb-0"><i class="far fa-calendar-alt text-muted me-2"></i>{{ \Carbon\Carbon::parse($booking->date)->format('M d, Y') }}</p>
+                        </div>
+                        <div class="col-6">
+                            <label class="text-muted small text-uppercase fw-bold mb-1">Time</label>
+                            <p class="mb-0"><i class="far fa-clock text-muted me-2"></i>{{ \Carbon\Carbon::parse($booking->start_time)->format('h:i A') }} - {{ \Carbon\Carbon::parse($booking->end_time)->format('h:i A') }}</p>
+                        </div>
+                        
+                        <div class="col-12 mt-4">
+                            <label class="text-muted small text-uppercase fw-bold mb-1">Contact Information</label>
+                            <p class="mb-1"><i class="fas fa-phone text-muted me-2"></i>{{ $booking->phone }}</p>
+                            <p class="mb-0"><i class="fas fa-map-marker-alt text-muted me-2"></i>{{ $booking->address }}</p>
+                        </div>
+                        
+                        @if($booking->notes)
+                        <div class="col-12 mt-3">
+                            <label class="text-muted small text-uppercase fw-bold mb-1">Additional Notes</label>
+                            <div class="p-3 bg-light rounded-3 small">
+                                {{ $booking->notes }}
+                            </div>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+                <div class="modal-footer border-top bg-light rounded-bottom-4">
+                    <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Close</button>
+                    @if($booking->status === 'booked')
+                        <form action="{{ route('service-provider.bookings.confirm', $booking) }}" method="POST" class="m-0">
+                            @csrf
+                            <button type="submit" class="btn btn-success rounded-pill px-4 fw-bold">
+                                <i class="fas fa-check-circle me-2"></i>Confirm Booking
+                            </button>
+                        </form>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+@endforeach
+
 @endsection

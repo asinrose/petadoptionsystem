@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ config('app.name', 'PetPal') }}</title>
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="{{ asset('petpal-paw.svg') }}">
+
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -335,23 +338,17 @@
     <!-- Stats Section -->
     <section class="stats">
         <div class="container">
-            <div class="row">
-                <div class="col-md-4 mb-4 mb-md-0">
-                    <div class="stat-item">
-                        <div class="stat-number">500+</div>
-                        <div class="stat-label">Happy Adoptions</div>
-                    </div>
+            <div class="row text-center text-md-start align-items-center">
+                <div class="col-lg-8 mb-4 mb-lg-0">
+                    <h3 class="fw-bold mb-3">About The Pet Adoption System Project</h3>
+                    <p class="mb-0 text-white-50" style="font-size: 1.1rem; line-height: 1.6;">
+                        This platform was built to bridge the gap between loving homes and animals in need. By providing a secure, centralized hub for pet adoption and professional care services, we aim to streamline the process of finding forever homes while building a supportive community for pet parents everywhere.
+                    </p>
                 </div>
-                <div class="col-md-4 mb-4 mb-md-0">
-                    <div class="stat-item">
-                        <div class="stat-number">120+</div>
-                        <div class="stat-label">Verified Providers</div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="stat-item">
-                        <div class="stat-number">100%</div>
-                        <div class="stat-label">Love & Care</div>
+                <div class="col-lg-4 text-center text-lg-end">
+                    <div class="d-inline-flex flex-column align-items-center align-items-lg-end">
+                        <span class="fs-1 fw-bold mb-1"><i class="fas fa-heart text-danger"></i></span>
+                        <span class="text-white-50 text-uppercase tracking-wider small fw-semibold">Built With Purpose</span>
                     </div>
                 </div>
             </div>
@@ -372,8 +369,6 @@
                         <li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Verified Profiles & Safe Adoption Process</li>
                         <li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Expert Care Advice & Resources</li>
                         <li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> 24/7 Support for New Pet Parents</li>
-                    </ul>
-                    <a href="{{ route('register') }}" class="btn btn-primary-custom mt-3">Join Our Mission</a>
                 </div>
             </div>
         </div>
@@ -397,10 +392,8 @@
                 <div class="col-md-4 mb-4">
                     <h5 class="fw-bold mb-3">Connect With Us</h5>
                     <div class="d-flex mb-3">
-                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.facebook.com/aspca" target="_blank" rel="noopener noreferrer" class="social-link" title="Visit our Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/aspca/" target="_blank" rel="noopener noreferrer" class="social-link" title="Visit our Instagram"><i class="fab fa-instagram"></i></a>
                     </div>
                     <p class="text-white-50">Subscribe to our newsletter</p>
                     <div class="input-group">
