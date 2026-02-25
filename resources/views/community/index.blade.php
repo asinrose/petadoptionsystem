@@ -14,8 +14,8 @@
             <div class="card border-0 shadow-sm rounded-4 mb-4">
                 <div class="card-body p-4">
                     <div class="d-flex">
-                        <img src="{{ auth()->user()->profile_photo_url ?? 'https://ui-avatars.com/api/?name='.auth()->user()->name }}" 
-                             class="rounded-circle me-3" width="50" height="50" alt="User">
+                        <img src="{{ auth()->user()->profile_photo ? asset('storage/' . auth()->user()->profile_photo) : 'https://ui-avatars.com/api/?name='.urlencode(auth()->user()->name) }}" 
+                             class="rounded-circle me-3" width="50" height="50" alt="User" style="object-fit: cover;">
                         <div class="flex-grow-1">
                             <form action="{{ route('community.store') }}" method="POST">
                                 @csrf
@@ -39,8 +39,8 @@
                         <!-- Post Header -->
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <div class="d-flex align-items-center">
-                                <img src="{{ $post->user->profile_photo_url ?? 'https://ui-avatars.com/api/?name='.$post->user->name }}" 
-                                     class="rounded-circle me-3" width="45" height="45" alt="User">
+                                <img src="{{ $post->user->profile_photo ? asset('storage/' . $post->user->profile_photo) : 'https://ui-avatars.com/api/?name='.urlencode($post->user->name) }}" 
+                                     class="rounded-circle me-3" width="45" height="45" alt="User" style="object-fit: cover;">
                                 <div>
                                     <h6 class="fw-bold mb-0">{{ $post->user->name }}</h6>
                                     <small class="text-muted">{{ $post->created_at->diffForHumans() }}</small>
@@ -59,9 +59,12 @@
                                     data-bs-target="#comments-{{ $post->id }}">
                                 <i class="far fa-comment me-2"></i> {{ $post->comments->count() }} Comments
                             </button>
-                            <button class="btn btn-link text-decoration-none text-muted p-0">
-                                <i class="far fa-heart me-2"></i> Like
-                            </button>
+                            <form action="{{ route('community.like', $post->id) }}" method="POST" class="d-inline">
+                                @csrf
+                                <button type="submit" class="btn btn-link text-decoration-none p-0 {{ $post->isLikedBy(auth()->user()) ? 'text-danger' : 'text-muted' }}">
+                                    <i class="{{ $post->isLikedBy(auth()->user()) ? 'fas' : 'far' }} fa-heart me-2"></i> {{ $post->likes()->count() > 0 ? $post->likes()->count() : '' }} Like{{ $post->likes()->count() != 1 ? 's' : '' }}
+                                </button>
+                            </form>
                         </div>
 
                         <!-- Comments Section -->
@@ -69,8 +72,8 @@
                             <div class="bg-light rounded-3 p-3">
                                 @foreach($post->comments as $comment)
                                     <div class="d-flex mb-3">
-                                        <img src="{{ $comment->user->profile_photo_url ?? 'https://ui-avatars.com/api/?name='.$comment->user->name }}" 
-                                             class="rounded-circle me-2" width="30" height="30" alt="User">
+                                        <img src="{{ $comment->user->profile_photo ? asset('storage/' . $comment->user->profile_photo) : 'https://ui-avatars.com/api/?name='.urlencode($comment->user->name) }}" 
+                                             class="rounded-circle me-2" width="30" height="30" alt="User" style="object-fit: cover;">
                                         <div class="flex-grow-1">
                                             <div class="bg-white p-2 rounded-3 shadow-sm">
                                                 <div class="d-flex justify-content-between">

@@ -422,11 +422,7 @@
                         <a href="https://www.facebook.com/aspca" target="_blank" rel="noopener noreferrer" class="social-link" title="Visit our Facebook"><i class="fab fa-facebook-f"></i></a>
                         <a href="https://www.instagram.com/aspca/" target="_blank" rel="noopener noreferrer" class="social-link" title="Visit our Instagram"><i class="fab fa-instagram"></i></a>
                     </div>
-                    <p class="text-white-50">Subscribe to our newsletter</p>
-                    <div class="input-group">
-                        <input type="email" class="form-control" placeholder="Email Address">
-                        <button class="btn btn-primary" type="button">Subscribe</button>
-                    </div>
+
                 </div>
             </div>
             <hr class="border-secondary my-4">

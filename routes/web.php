@@ -38,6 +38,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/community', [App\Http\Controllers\CommunityController::class , 'index'])->name('community.index');
         Route::post('/community', [App\Http\Controllers\CommunityController::class , 'store'])->name('community.store');
         Route::post('/community/{post}/comment', [App\Http\Controllers\CommunityController::class , 'comment'])->name('community.comment');
+        Route::post('/community/{post}/like', [App\Http\Controllers\CommunityController::class , 'toggleLike'])->name('community.like');
 
         // Favorites
         Route::post('/favorites/{pet}', [App\Http\Controllers\FavoriteController::class , 'toggle'])->name('favorite.toggle');

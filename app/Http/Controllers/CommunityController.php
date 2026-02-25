@@ -44,4 +44,18 @@ class CommunityController extends Controller
 
         return back()->with('success', 'Comment added!');
     }
+
+    public function toggleLike(CommunityPost $post)
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        if ($post->isLikedBy($user)) {
+            $post->likes()->detach($user->id);
+            return back()->with('success', 'Post unliked');
+        }
+        else {
+            $post->likes()->attach($user->id);
+            return back()->with('success', 'Post liked');
+        }
+    }
 }
