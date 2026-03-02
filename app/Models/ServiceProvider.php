@@ -26,6 +26,12 @@ class ServiceProvider extends Model
         return $this->hasMany(PetService::class);
     }
 
+    // Provider → Products
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
     // Provider → Bookings
     public function serviceBookings()
     {

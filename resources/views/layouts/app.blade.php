@@ -104,6 +104,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url('/#about') }}">About</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link fw-bold text-primary" href="{{ route('shop.index') }}">Shop</a>
+                            </li>
                         @endif
                     @else
                         <li class="nav-item">
@@ -114,6 +117,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/#about') }}">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-bold text-primary" href="{{ route('shop.index') }}">Shop</a>
                         </li>
                     @endauth
 
@@ -140,6 +146,19 @@
                             </a>
 
                             <ul class="dropdown-menu dropdown-menu-end shadow">
+                                @if(auth()->user()->role === 'user')
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('cart.index') }}">
+                                        <i class="fas fa-shopping-cart me-2 text-primary"></i> My Cart
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('profile.orders') }}">
+                                        <i class="fas fa-box-open me-2 text-info"></i> My Orders
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                @endif
                                 <li>
                                     <a class="dropdown-item"
                                        href="{{ route('profile.edit') }}">

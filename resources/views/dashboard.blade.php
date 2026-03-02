@@ -242,6 +242,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#about">About</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold text-primary" href="{{ route('shop.index') }}" style="color: #0d6efd !important;">Shop</a>
+                    </li>
                     
                     @guest
     <li class="nav-item ms-lg-3">
@@ -263,6 +266,19 @@
         </a>
 
         <ul class="dropdown-menu dropdown-menu-end shadow">
+            @if(auth()->user()->role === 'user')
+            <li>
+                <a class="dropdown-item" href="{{ route('cart.index') }}">
+                    <i class="fas fa-shopping-cart me-2 text-primary"></i> My Cart
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item" href="{{ route('profile.orders') }}">
+                    <i class="fas fa-box-open me-2 text-info"></i> My Orders
+                </a>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            @endif
             <li>
                 <a class="dropdown-item" href="{{ route('profile.edit') }}">
                     <i class="fas fa-user me-2"></i> Profile

@@ -281,7 +281,12 @@
                     <i class="fas fa-chevron-right text-muted small"></i>
                 </a>
 
-                <a href="#" class="action-btn">
+                <a href="{{ route('service-provider.products.index') }}" class="action-btn">
+                    <span><i class="fas fa-box-open me-2 text-info"></i> Manage Products</span>
+                    <i class="fas fa-chevron-right text-muted small"></i>
+                </a>
+
+                <a href="{{ route('profile.edit') }}" class="action-btn">
                     <span><i class="fas fa-user-edit me-2 text-warning"></i> Edit Profile</span>
                     <i class="fas fa-chevron-right text-muted small"></i>
                 </a>

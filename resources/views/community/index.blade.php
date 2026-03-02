@@ -17,11 +17,21 @@
                         <img src="{{ auth()->user()->profile_photo ? asset('storage/' . auth()->user()->profile_photo) : 'https://ui-avatars.com/api/?name='.urlencode(auth()->user()->name) }}" 
                              class="rounded-circle me-3" width="50" height="50" alt="User" style="object-fit: cover;">
                         <div class="flex-grow-1">
-                            <form action="{{ route('community.store') }}" method="POST">
+                            <form action="{{ route('community.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <textarea name="content" class="form-control border-0 bg-light rounded-3 mb-3" rows="3" 
                                           placeholder="What's on your mind? Share a story..." required></textarea>
-                                <div class="text-end">
+                                @error('media')
+                                    <div class="text-danger small mb-3">{{ $message }}</div>
+                                @enderror
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <label for="media_upload" class="btn btn-outline-secondary rounded-pill px-3 m-0" style="cursor: pointer;">
+                                            <i class="fas fa-image me-1"></i> Add Photo/Video
+                                        </label>
+                                        <input type="file" id="media_upload" name="media" class="d-none" accept="image/*,video/*" onchange="document.getElementById('file-chosen').textContent = this.files[0].name">
+                                        <span id="file-chosen" class="ms-2 small text-muted"></span>
+                                    </div>
                                     <button type="submit" class="btn btn-primary rounded-pill px-4">
                                         <i class="fas fa-paper-plane me-2"></i> Post
                                     </button>
@@ -49,7 +59,21 @@
                         </div>
 
                         <!-- Post Content -->
-                        <p class="mb-4">{{ $post->content }}</p>
+                        <p class="{{ $post->media_path ? 'mb-3' : 'mb-4' }}">{{ $post->content }}</p>
+
+                        <!-- Post Media -->
+                        @if($post->media_path)
+                            <div class="mb-4 rounded-4 overflow-hidden bg-light text-center border">
+                                @if($post->media_type == 'image')
+                                    <img src="{{ Storage::url($post->media_path) }}" class="img-fluid w-100" alt="Post Default Image" style="max-height: 600px; object-fit: contain; background: #f8f9fa;">
+                                @elseif($post->media_type == 'video')
+                                    <video controls class="w-100" style="max-height: 600px; background: #000;">
+                                        <source src="{{ Storage::url($post->media_path) }}">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                @endif
+                            </div>
+                        @endif
 
                         <!-- Actions -->
                         <div class="d-flex justify-content-between align-items-center border-top pt-3">

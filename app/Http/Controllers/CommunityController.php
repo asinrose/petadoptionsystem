@@ -20,11 +20,30 @@ class CommunityController extends Controller
     {
         $request->validate([
             'content' => 'required|string|max:1000',
+            'media' => 'nullable|file|mimes:jpeg,png,jpg,gif,mp4,mov,avi|max:51200', // 50MB max
         ]);
+
+        $mediaPath = null;
+        $mediaType = null;
+
+        if ($request->hasFile('media')) {
+            $file = $request->file('media');
+            $mediaPath = $file->store('community_media', 'public');
+            $mimeType = $file->getMimeType();
+
+            if (str_starts_with($mimeType, 'image/')) {
+                $mediaType = 'image';
+            }
+            elseif (str_starts_with($mimeType, 'video/')) {
+                $mediaType = 'video';
+            }
+        }
 
         CommunityPost::create([
             'user_id' => Auth::id(),
             'content' => $request->content,
+            'media_path' => $mediaPath,
+            'media_type' => $mediaType,
         ]);
 
         return back()->with('success', 'Post created successfully!');

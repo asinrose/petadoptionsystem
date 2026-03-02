@@ -102,14 +102,17 @@
                     <a href="{{ route('admin.pets') }}">
                         <i class="fas fa-paw"></i> Pet Management
                     </a>
+                    <a href="{{ route('admin.products') }}">
+                        <i class="fas fa-box-open"></i> Products
+                    </a>
+                    <a href="{{ route('admin.orders') }}">
+                        <i class="fas fa-shopping-cart"></i> Orders
+                    </a>
                     <a href="#">
                         <i class="fas fa-hand-holding-heart"></i> Adoptions
                     </a>
                     <a href="#">
                         <i class="fas fa-briefcase"></i> Service Providers
-                    </a>
-                    <a href="#">
-                        <i class="fas fa-cog"></i> Settings
                     </a>
                     
                     <hr class="my-3">
@@ -163,6 +166,25 @@
                             </div>
                             <div class="stat-value">{{ $adoptedPets }}</div>
                             <div class="stat-label">Pets Adopted</div>
+                        </div>
+                    </div>
+                    <!-- New Stats for Products and Orders -->
+                    <div class="col-md-3 mt-4">
+                        <div class="stat-card" style="border-left-color: #9c27b0;">
+                            <div class="stat-icon" style="background: #f3e5f5; color: #9c27b0;">
+                                <i class="fas fa-box-open"></i>
+                            </div>
+                            <div class="stat-value">{{ \App\Models\Product::count() }}</div>
+                            <div class="stat-label">Total Products</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mt-4">
+                        <div class="stat-card" style="border-left-color: #fbc02d;">
+                            <div class="stat-icon" style="background: #fffde7; color: #fbc02d;">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <div class="stat-value">{{ \App\Models\Order::count() }}</div>
+                            <div class="stat-label">Total Orders</div>
                         </div>
                     </div>
                 </div>

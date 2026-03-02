@@ -8,6 +8,10 @@ Route::get('/', function () {
 
 Route::get('/services/{service}', [App\Http\Controllers\PublicServiceController::class , 'show'])->name('services.show');
 
+// Public Shop Route
+Route::get('/shop', [App\Http\Controllers\ShopController::class , 'index'])->name('shop.index');
+Route::get('/shop/{product}', [App\Http\Controllers\ShopController::class , 'show'])->name('shop.show');
+
 /* |-------------------------------------------------------------------------- | Authenticated User Dashboard |-------------------------------------------------------------------------- */
 Route::middleware(['auth'])->group(function () {
 
@@ -49,6 +53,17 @@ Route::middleware(['auth'])->group(function () {
 
         // Booked Services
         Route::get('/profile/booked-services', [ProfileController::class , 'bookedServices'])->name('profile.booked_services');
+
+        // Cart & Checkout
+        Route::get('/cart', [App\Http\Controllers\CartController::class , 'index'])->name('cart.index');
+        Route::post('/cart/{product}', [App\Http\Controllers\CartController::class , 'add'])->name('cart.add');
+        Route::patch('/cart/{cart}', [App\Http\Controllers\CartController::class , 'update'])->name('cart.update');
+        Route::delete('/cart/{cart}', [App\Http\Controllers\CartController::class , 'remove'])->name('cart.remove');
+        Route::get('/checkout', [App\Http\Controllers\CartController::class , 'checkout'])->name('cart.checkout');
+
+        // Orders
+        Route::post('/orders', [App\Http\Controllers\OrderController::class , 'store'])->name('order.store');
+        Route::get('/profile/orders', [App\Http\Controllers\OrderController::class , 'userOrders'])->name('profile.orders');
     });
 
 /* |-------------------------------------------------------------------------- | Service Provider Dashboard |-------------------------------------------------------------------------- */
@@ -60,6 +75,17 @@ Route::middleware(['auth', 'service_provider'])->group(function () {
     // Services Management
     Route::get('/service-provider/services', [App\Http\Controllers\ServiceProviderServiceController::class , 'index'])->name('service-provider.services.index');
     Route::post('/service-provider/services', [App\Http\Controllers\ServiceProviderServiceController::class , 'store'])->name('service-provider.services.store');
+
+    // Product Management
+    Route::resource('/service-provider/products', App\Http\Controllers\ServiceProviderProductController::class)->names([
+        'index' => 'service-provider.products.index',
+        'create' => 'service-provider.products.create',
+        'store' => 'service-provider.products.store',
+        'show' => 'service-provider.products.show',
+        'edit' => 'service-provider.products.edit',
+        'update' => 'service-provider.products.update',
+        'destroy' => 'service-provider.products.destroy',
+    ]);
 });
 
 /* |-------------------------------------------------------------------------- | Admin Dashboard |-------------------------------------------------------------------------- */
@@ -69,6 +95,10 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(
     Route::get('/admin/pets', [App\Http\Controllers\AdminController::class , 'pets'])->name('admin.pets');
     Route::delete('/admin/pets/{pet}', [App\Http\Controllers\AdminController::class , 'destroyPet'])->name('admin.pets.destroy');
     Route::patch('/admin/pets/{pet}/status', [App\Http\Controllers\AdminController::class , 'updatePetStatus'])->name('admin.pets.update_status');
+
+    // Admin Products & Orders
+    Route::get('/admin/products', [App\Http\Controllers\AdminController::class , 'products'])->name('admin.products');
+    Route::get('/admin/orders', [App\Http\Controllers\AdminController::class , 'orders'])->name('admin.orders');
 });
 
 require __DIR__ . '/auth.php';

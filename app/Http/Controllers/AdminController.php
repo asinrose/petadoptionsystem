@@ -48,4 +48,16 @@ class AdminController extends Controller
 
         return redirect()->back()->with('success', 'Pet status updated successfully!');
     }
+
+    public function products()
+    {
+        $products = \App\Models\Product::with('serviceProvider.user')->latest()->paginate(10);
+        return view('admin.products.index', compact('products'));
+    }
+
+    public function orders()
+    {
+        $orders = \App\Models\Order::with('user')->latest()->paginate(10);
+        return view('admin.orders.index', compact('orders'));
+    }
 }
