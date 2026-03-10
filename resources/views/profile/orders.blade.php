@@ -18,7 +18,10 @@
 
     <div class="row justify-content-center">
         <div class="col-lg-10">
-            @forelse($orders as $order)
+            
+             @if($orders->count() > 0)
+                    @foreach ($orders as $order)
+
                 <div class="card border-0 shadow-sm rounded-4 mb-4 overflow-hidden">
                     <div class="card-header bg-light border-bottom-0 py-3 px-4 d-flex justify-content-between align-items-center flex-wrap">
                         <div class="mb-2 mb-md-0">

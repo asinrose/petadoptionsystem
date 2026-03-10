@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::table('service_bookings', function (Blueprint $table) {
             $table->foreignId('service_id')
-                ->after('provider_id')
-                ->constrained('pet_services')
-                ->onDelete('cascade');
+                  ->after('provider_id')
+                  ->constrained('pet_services')
+                  ->onDelete('cascade');
         });
     }
 

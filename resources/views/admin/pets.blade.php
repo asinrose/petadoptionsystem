@@ -150,7 +150,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($pets as $pet)
+                               
+                                 @if($pets->count() > 0)
+                    @foreach ($pets as $pet)
+
                                 <tr>
                                     <td>
                                         <div class="d-flex align-items-center">

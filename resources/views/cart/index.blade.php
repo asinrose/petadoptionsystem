@@ -27,7 +27,10 @@
         <div class="col-lg-8">
             <div class="card border-0 shadow-sm rounded-4 overflow-hidden h-100">
                 <div class="card-body p-0">
-                    @forelse($cartItems as $item)
+                    
+                     @if($cartItems->count() > 0)
+                    @foreach ($cartItems as $item)
+
                         <div class="d-flex align-items-center p-4 border-bottom {{ $loop->last ? 'border-0' : '' }}">
                             <!-- Product Image -->
                             <div class="flex-shrink-0 me-4">

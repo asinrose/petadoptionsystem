@@ -117,7 +117,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($products as $product)
+                                
+                                 @if($products->count() > 0)
+                    @foreach ($products as $product)
+
                                 <tr>
                                     <td>#{{ $product->id }}</td>
                                     <td>

@@ -230,7 +230,10 @@
                 @endif
                 
                 <div class="p-0">
-                    @forelse($recentBookings as $booking)
+                    
+                     @if($recentBookings->count() > 0)
+                    @foreach ($recentBookings as $booking)
+
                         @php
                             $initials = collect(explode(' ', $booking->user->name))->map(function($segment) {
                                 return strtoupper(substr($segment, 0, 1));
