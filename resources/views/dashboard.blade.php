@@ -430,7 +430,6 @@
                     <a href="#" class="footer-link">Home</a>
                     <a href="#services" class="footer-link">Services</a>
                     <a href="#about" class="footer-link">About Us</a>
-                    <a href="{{ route('login') }}" class="footer-link">Login</a>
                 </div>
                 <div class="col-md-4 mb-4">
                     <h5 class="fw-bold mb-3">Connect With Us</h5>
