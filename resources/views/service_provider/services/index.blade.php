@@ -7,9 +7,9 @@
             <h2 class="fw-bold text-primary">My Services</h2>
             <p class="text-muted">Manage the services you offer to pet owners.</p>
         </div>
-        <button class="btn btn-primary rounded-pill px-4 shadow-sm" data-bs-toggle="modal" data-bs-target="#addServiceModal">
+        <a href="{{ route('service-provider.services.create') }}" class="btn btn-primary rounded-pill px-4 shadow-sm">
             <i class="fas fa-plus me-2"></i> Add Service
-        </button>
+        </a>
     </div>
 
     @if(session('success'))

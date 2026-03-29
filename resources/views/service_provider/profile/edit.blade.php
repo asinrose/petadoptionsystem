@@ -124,10 +124,8 @@
                     <a href="{{ route('service-provider.dashboard') }}">
                         <i class="fas fa-chart-line"></i> Dashboard
                     </a>
-                    <a href="#"><i class="fas fa-tasks"></i> My Services</a>
+                    <a href="{{ route('service-provider.services.index') }}"><i class="fas fa-tasks"></i> My Services</a>
                     <a href="{{ route('service-provider.products.index') }}"><i class="fas fa-box-open"></i> Products</a>
-                    <a href="#"><i class="fas fa-calendar-check"></i> Bookings</a>
-                    <a href="#"><i class="fas fa-cog"></i> Settings</a>
 
                     <!-- Logout trigger -->
                     <button type="button"

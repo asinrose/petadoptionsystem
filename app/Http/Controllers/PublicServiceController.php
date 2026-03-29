@@ -41,8 +41,8 @@ class PublicServiceController extends Controller
                 'features' => [
                     'Forums and discussion boards',
                     'Local pet meetups and events',
-                    'Expert Q&A sessions',
-                    'Photo contests and sharing'
+                    'Photo contests and sharing',
+                    'Comment and like on Posts',
                 ],
                 'image' => 'https://images.unsplash.com/photo-1534361960057-19889db9621e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
                 'cta' => 'Join the Community',

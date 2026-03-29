@@ -118,8 +118,8 @@
                     <a href="{{ route('profile.favorites') }}"><i class="far fa-heart"></i> Favorites</a>
                     <a href="{{ route('pets.create') }}"><i class="fas fa-plus"></i> Add pet</a>
                     <a href="{{ route('profile.booked_services') }}"><i class="far fa-calendar-alt"></i> Booked Services</a>
-                    <a href="{{ route('profile.booked_pets') }}"><i class="fas fa-bone"></i> Booked Pets</a>
-                    <a href="{{ route('profile.applications') }}" class="active"><i class="fas fa-paw"></i> Adoption Applications</a>
+                    <a href="{{ route('profile.booked_pets') }}" class="active"><i class="fas fa-bone"></i> Booked Pets</a>
+                    <a href="{{ route('profile.applications') }}"><i class="fas fa-paw"></i> Adoption Applications</a>
 
                     <!-- Logout trigger -->
                     <button type="button"
@@ -134,18 +134,12 @@
             <!-- RIGHT CONTENT -->
             <div class="profile-content">
 
-                @if(session('success'))
-                    <div class="alert alert-success mb-4">
-                        {{ session('success') }}
-                    </div>
-                @endif
-
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h4 class="fw-bold mb-0">Adoption Applications</h4>
-                    <span class="badge bg-primary rounded-pill px-3 py-2 fs-6">{{ $applications->count() }} Requests</span>
+                    <h4 class="fw-bold mb-0">My Booked Pets</h4>
+                    <span class="badge bg-primary rounded-pill px-3 py-2 fs-6">{{ $applications->count() }} Pets</span>
                 </div>
 
-                <p class="text-muted mb-4">Here are the adoption requests submitted by users for your posted pets.</p>
+                <p class="text-muted mb-4">Here are the pets you have sent adoption requests for.</p>
 
                 @if($applications->count() > 0)
                     @foreach ($applications as $application)
@@ -165,20 +159,20 @@
                                 </div>
                             </div>
                             
-                            <!-- Requester Info Col -->
+                            <!-- Owner Info Col -->
                             <div class="col-md-5 mb-3 mb-md-0 border-start border-md-0 ps-md-4">
-                                <div class="text-uppercase text-muted small fw-bold mb-2">Requester Info</div>
+                                <div class="text-uppercase text-muted small fw-bold mb-2">Owner Info</div>
                                 <div class="d-flex align-items-center mb-1">
                                     <i class="fas fa-user-circle text-primary me-2 fs-5"></i>
-                                    <span class="fw-semibold">{{ $application->user->name }}</span>
+                                    <span class="fw-semibold">{{ $application->pet->user->name ?? 'Unknown' }}</span>
                                 </div>
                                 <div class="d-flex align-items-center mb-1">
                                     <i class="fas fa-envelope text-muted me-2"></i>
-                                    <a href="mailto:{{ $application->user->email }}" class="text-muted text-decoration-none">{{ $application->user->email }}</a>
+                                    <a href="mailto:{{ $application->pet->user->email ?? '' }}" class="text-muted text-decoration-none">{{ $application->pet->user->email ?? 'N/A' }}</a>
                                 </div>
                                 <div class="d-flex align-items-center">
                                     <i class="fas fa-phone-alt text-muted me-2"></i>
-                                    <span class="text-muted">{{ $application->user->contact ?: 'No contact provided' }}</span>
+                                    <span class="text-muted">{{ $application->pet->user->contact ?? 'No contact provided' }}</span>
                                 </div>
                             </div>
 
@@ -193,22 +187,6 @@
                                 <div class="text-muted small">
                                     {{ \Carbon\Carbon::parse($application->request_date)->diffForHumans() }}
                                 </div>
-                                @if($application->status === 'pending')
-                                    <div class="d-flex flex-column gap-2 mt-3">
-                                        <form action="{{ route('profile.applications.update_status', $application->id) }}" method="POST">
-                                            @csrf
-                                            @method('PATCH')
-                                            <input type="hidden" name="status" value="approved">
-                                            <button type="submit" class="btn btn-sm btn-success w-100 rounded-pill shadow-sm text-white fw-bold">Accept</button>
-                                        </form>
-                                        <form action="{{ route('profile.applications.update_status', $application->id) }}" method="POST">
-                                            @csrf
-                                            @method('PATCH')
-                                            <input type="hidden" name="status" value="rejected">
-                                            <button type="submit" class="btn btn-sm btn-outline-danger w-100 rounded-pill shadow-sm fw-bold">Reject</button>
-                                        </form>
-                                    </div>
-                                @endif
                             </div>
                         </div>
                     </div>
@@ -216,10 +194,11 @@
                 @else
                     <div class="text-center py-5 bg-light rounded-4">
                         <div class="mb-3">
-                            <i class="fas fa-inbox text-muted" style="font-size: 3rem;"></i>
+                            <i class="fas fa-paw text-muted" style="font-size: 3rem;"></i>
                         </div>
-                        <h5 class="text-muted fw-bold">No Applications Yet</h5>
-                        <p class="text-muted">You haven't received any adoption applications for your pets.</p>
+                        <h5 class="text-muted fw-bold">No Booked Pets</h5>
+                        <p class="text-muted">You haven't requested to adopt any pets yet. Find your new best friend today!</p>
+                        <a href="{{ url('/') }}" class="btn btn-primary rounded-pill px-4 mt-2">Browse Pets</a>
                     </div>
                 @endif
 

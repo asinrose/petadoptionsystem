@@ -151,8 +151,7 @@
                             </thead>
                             <tbody>
                                
-                                 @if($pets->count() > 0)
-                    @foreach ($pets as $pet)
+                    @forelse ($pets as $pet)
 
                                 <tr>
                                     <td>

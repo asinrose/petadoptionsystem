@@ -49,7 +49,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/profile/favorites', [App\Http\Controllers\FavoriteController::class , 'index'])->name('profile.favorites');
 
         // Adoption Applications
+        Route::get('/profile/booked-pets', [App\Http\Controllers\AdoptionController::class, 'bookedPets'])->name('profile.booked_pets');
         Route::get('/profile/adoption-applications', [App\Http\Controllers\AdoptionController::class , 'applications'])->name('profile.applications');
+        Route::patch('/profile/adoption-applications/{application}/status', [App\Http\Controllers\AdoptionController::class, 'updateStatus'])->name('profile.applications.update_status');
 
         // Booked Services
         Route::get('/profile/booked-services', [ProfileController::class , 'bookedServices'])->name('profile.booked_services');
@@ -70,10 +72,12 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth', 'service_provider'])->group(function () {
 
     Route::get('/service-provider/dashboard', [\App\Http\Controllers\ServiceProviderDashboardController::class , 'index'])->name('service-provider.dashboard');
+    Route::get('/service-provider/schedule', [\App\Http\Controllers\ServiceProviderDashboardController::class, 'schedule'])->name('service-provider.schedule');
     Route::post('/service-provider/bookings/{booking}/confirm', [\App\Http\Controllers\ServiceProviderDashboardController::class , 'confirmBooking'])->name('service-provider.bookings.confirm');
 
     // Services Management
     Route::get('/service-provider/services', [App\Http\Controllers\ServiceProviderServiceController::class , 'index'])->name('service-provider.services.index');
+    Route::get('/service-provider/services/create', [App\Http\Controllers\ServiceProviderServiceController::class , 'create'])->name('service-provider.services.create');
     Route::post('/service-provider/services', [App\Http\Controllers\ServiceProviderServiceController::class , 'store'])->name('service-provider.services.store');
 
     // Product Management

@@ -96,6 +96,7 @@
                     <a href="{{ route('profile.favorites') }}" class="active"><i class="fas fa-heart"></i> Favorites</a>
                     <a href="{{ route('pets.create') }}"><i class="fas fa-plus"></i> Add pet</a>
                     <a href="{{ route('profile.booked_services') }}"><i class="far fa-calendar-alt"></i> Booked Services</a>
+                    <a href="{{ route('profile.booked_pets') }}"><i class="fas fa-bone"></i> Booked Pets</a>
                     <a href="{{ route('profile.applications') }}"><i class="fas fa-paw"></i> Adoption Applications</a>
 
                     <!-- Logout trigger -->

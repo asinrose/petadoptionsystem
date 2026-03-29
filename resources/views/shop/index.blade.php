@@ -110,8 +110,7 @@
 
     <div class="row g-4">
   
-         @if($products->count() > 0)
-                    @foreach ($products as $product)
+                    @forelse ($products as $product)
 
             <div class="col-md-6 col-lg-4 col-xl-3">
                 <div class="card h-100 border-0 glass-card text-decoration-none">

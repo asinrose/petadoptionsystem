@@ -110,8 +110,7 @@
                             </thead>
                             <tbody>
                                
-                                 @if($orders->count() > 0)
-                    @foreach ($orders as $order)
+                    @forelse ($orders as $order)
 
                                 <tr>
                                     <td class="fw-bold text-muted">#{{ str_pad($order->id, 5, '0', STR_PAD_LEFT) }}</td>

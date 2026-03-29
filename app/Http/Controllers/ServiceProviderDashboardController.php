@@ -48,4 +48,22 @@ class ServiceProviderDashboardController extends Controller
 
         return redirect()->back()->with('success', 'Booking confirmed successfully!');
     }
+    public function schedule()
+    {
+        $provider = auth()->user()->serviceProvider;
+        
+        if (!$provider) {
+            return redirect()->route('service-provider.dashboard')->with('error', 'Provider profile not found.');
+        }
+
+        // Fetch upcoming bookings (status pending or confirmed)
+        $bookings = $provider->serviceBookings()
+            ->with(['user', 'service'])
+            ->whereIn('status', ['booked', 'confirmed'])
+            ->orderBy('date', 'asc')
+            ->orderBy('start_time', 'asc')
+            ->get();
+
+        return view('service_provider.schedule', compact('bookings'));
+    }
 }

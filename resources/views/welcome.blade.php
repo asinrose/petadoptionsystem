@@ -364,11 +364,26 @@
                 </div>
                 <div class="col-lg-6 order-1 order-lg-2 ps-lg-5 mb-4 mb-lg-0">
                     <h2 class="fw-bold mb-4">Why Choose Us?</h2>
-                    <p class="lead mb-4">We are more than just a platform; we are a movement to create a better world for animals.</p>
-                    <ul class="list-unstyled">
-                        <li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Verified Profiles & Safe Adoption Process</li>
-                        <li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Expert Care Advice & Resources</li>
-                        <li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> 24/7 Support for New Pet Parents</li>
+<p class="lead mb-4">We provide a complete ecosystem for pet lovers—everything you need from finding a furry friend to lifelong care.</p>
+<ul class="list-unstyled">
+    <li class="mb-3">
+        <i class="fas fa-heart text-primary me-2"></i> 
+        <strong>Safe & Seamless Adoption:</strong> A streamlined, secure process to connect loving homes with pets in need.
+    </li>
+    <li class="mb-3">
+        <i class="fas fa-user-md text-primary me-2"></i> 
+        <strong>Verified Care Services:</strong> Easily book trusted groomers, trainers, and veterinarians in your area.
+    </li>
+    <li class="mb-3">
+        <i class="fas fa-users text-primary me-2"></i> 
+        <strong>Vibrant Pet Community:</strong> Share moments, upload photos, and connect with fellow pet parents.
+    </li>
+    <li class="mb-3">
+        <i class="fas fa-shopping-bag text-primary me-2"></i> 
+        <strong>Integrated Pet Shop:</strong> Convenient access to high-quality pet supplies and accessories all in one place.
+    </li>
+</ul>
+
                 </div>
             </div>
         </div>

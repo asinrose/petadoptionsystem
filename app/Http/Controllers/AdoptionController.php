@@ -49,4 +49,34 @@ class AdoptionController extends Controller
 
         return view('profile.applications', compact('applications'));
     }
+
+    public function updateStatus(Request $request, AdoptionRequest $application)
+    {
+        // Ensure the logged-in user owns the pet being applied for
+        if ($application->pet->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $request->validate([
+            'status' => 'required|in:approved,rejected',
+        ]);
+
+        $application->update([
+            'status' => $request->status,
+        ]);
+
+        return back()->with('success', 'Application status successfully updated to ' . $request->status . '.');
+    }
+
+    public function bookedPets()
+    {
+        // Fetch adoption requests made by the logged-in user
+        $applications = AdoptionRequest::where('user_id', auth()->id())
+            ->with(['pet', 'pet.user'])
+            ->latest()
+            ->get();
+
+        return view('profile.booked_pets', compact('applications'));
+    }
 }
+

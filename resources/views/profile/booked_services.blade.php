@@ -163,6 +163,7 @@
                     <a href="{{ route('profile.favorites') }}"><i class="fas fa-heart"></i> Favorites</a>
                     <a href="{{ route('pets.create') }}"><i class="fas fa-plus"></i> Add pet</a>
                     <a href="{{ route('profile.booked_services') }}" class="active"><i class="far fa-calendar-alt"></i> Booked Services</a>
+                    <a href="{{ route('profile.booked_pets') }}"><i class="fas fa-bone"></i> Booked Pets</a>
                     <a href="{{ route('profile.applications') }}"><i class="fas fa-paw"></i> Adoption Applications</a>
                     
                     <!-- Logout trigger -->
@@ -197,8 +198,7 @@
 
                 <div class="bookings-list">
                     
-                    @if($bookings->count() > 0)
-                    @foreach ($bookings as $booking))
+                    @forelse ($bookings as $booking)
                         <div class="booking-card">
                             <div class="booking-info">
                                 <h5>{{ $booking->service->name ?? 'Unknown Service' }}</h5>

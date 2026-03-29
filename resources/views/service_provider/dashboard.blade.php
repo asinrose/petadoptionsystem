@@ -167,9 +167,9 @@
                     </div>
                 </div>
                 <div class="mt-auto pt-3">
-                    <span class="badge bg-light text-primary rounded-pill px-3 py-2">
+                    <a href="{{ route('service-provider.services.create') }}" class="badge bg-light text-primary rounded-pill px-3 py-2 text-decoration-none d-inline-block">
                         <i class="fas fa-plus me-1"></i> Add New
-                    </span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -231,8 +231,7 @@
                 
                 <div class="p-0">
                     
-                     @if($recentBookings->count() > 0)
-                    @foreach ($recentBookings as $booking)
+                    @forelse ($recentBookings as $booking)
 
                         @php
                             $initials = collect(explode(' ', $booking->user->name))->map(function($segment) {
@@ -279,7 +278,7 @@
             <div class="glass-card p-4 mb-4">
                 <h5 class="fw-bold mb-4">Quick Actions</h5>
                 
-                <a href="#" class="action-btn">
+                <a href="{{ route('service-provider.services.create') }}" class="action-btn">
                     <span><i class="fas fa-plus-circle me-2 text-primary"></i> Add New Service</span>
                     <i class="fas fa-chevron-right text-muted small"></i>
                 </a>
@@ -294,7 +293,7 @@
                     <i class="fas fa-chevron-right text-muted small"></i>
                 </a>
 
-                <a href="#" class="action-btn">
+                <a href="{{ route('service-provider.schedule') }}" class="action-btn">
                     <span><i class="fas fa-calendar-week me-2 text-success"></i> View Schedule</span>
                     <i class="fas fa-chevron-right text-muted small"></i>
                 </a>
