@@ -108,12 +108,10 @@
                     <a href="{{ route('admin.orders') }}">
                         <i class="fas fa-shopping-cart"></i> Orders
                     </a>
-                    <a href="#">
+                    <a href="{{ route('admin.adoptions') }}">
                         <i class="fas fa-hand-holding-heart"></i> Adoptions
                     </a>
-                    <a href="#">
-                        <i class="fas fa-briefcase"></i> Service Providers
-                    </a>
+
                     
                     <hr class="my-3">
                     

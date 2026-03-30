@@ -68,12 +68,10 @@
                     <a href="{{ route('admin.orders') }}" class="active">
                         <i class="fas fa-shopping-cart"></i> Orders
                     </a>
-                    <a href="#">
+                    <a href="{{ route('admin.adoptions') }}">
                         <i class="fas fa-hand-holding-heart"></i> Adoptions
                     </a>
-                    <a href="#">
-                        <i class="fas fa-briefcase"></i> Service Providers
-                    </a>
+
                     
                     <hr class="my-3">
                     
@@ -105,7 +103,6 @@
                                     <th>Amount</th>
                                     <th>Payment</th>
                                     <th>Status</th>
-                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -148,15 +145,10 @@
                                             {{ ucfirst($order->status) }}
                                         </span>
                                     </td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-info rounded-pill" disabled>
-                                            <i class="fas fa-eye me-1"></i> Details
-                                        </button>
-                                    </td>
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td colspan="7" class="text-center py-5 text-muted">
+                                    <td colspan="6" class="text-center py-5 text-muted">
                                         <i class="fas fa-shopping-basket fa-3x mb-3 opacity-25"></i>
                                         <p>No orders have been placed on the platform yet.</p>
                                     </td>

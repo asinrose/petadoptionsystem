@@ -60,4 +60,69 @@ class AdminController extends Controller
         $orders = \App\Models\Order::with('user')->latest()->paginate(10);
         return view('admin.orders.index', compact('orders'));
     }
+
+    public function exportUsers()
+    {
+        $users = User::all();
+        $headers = [
+            'Content-type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename=users_report_' . date('Y-m-d') . '.csv',
+            'Pragma' => 'no-cache',
+            'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0',
+            'Expires' => '0'
+        ];
+
+        $callback = function() use ($users) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, ['ID', 'Name', 'Email', 'Role', 'Status', 'Joined Date']);
+
+            foreach ($users as $user) {
+                fputcsv($file, [
+                    $user->id,
+                    $user->name,
+                    $user->email,
+                    ucfirst(str_replace('_', ' ', $user->role)),
+                    ucfirst($user->status),
+                    $user->created_at->format('Y-m-d')
+                ]);
+            }
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
+    public function updateUser(Request $request, User $user)
+    {
+        $request->validate([
+            'status' => 'required|string|in:active,inactive'
+        ]);
+
+        $user->update([
+            'status' => $request->status
+        ]);
+
+        return redirect()->back()->with('success', 'User ' . $user->name . ' updated successfully!');
+    }
+
+    public function adoptions()
+    {
+        $adoptions = \App\Models\AdoptionRequest::with(['user', 'pet'])->latest()->paginate(10);
+        return view('admin.adoptions', compact('adoptions'));
+    }
+
+    public function updateAdoptionStatus(\Illuminate\Http\Request $request, \App\Models\AdoptionRequest $request_obj)
+    {
+        $request->validate([
+            'status' => 'required|string|in:pending,approved,rejected'
+        ]);
+
+        $request_obj->update([
+            'status' => $request->status
+        ]);
+
+        return redirect()->back()->with('success', 'Adoption request status updated successfully!');
+    }
 }
+
+

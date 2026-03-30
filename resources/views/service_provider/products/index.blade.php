@@ -64,10 +64,17 @@
                                         {{ $product->is_active ? 'Active' : 'Inactive' }}
                                     </label>
                                 </div>
-                                <div>
+                                <div class="d-flex gap-2">
                                     <button class="btn btn-sm btn-outline-secondary rounded-pill" data-bs-toggle="modal" data-bs-target="#editProductModal{{ $product->id }}">
                                         <i class="fas fa-edit"></i> Edit
                                     </button>
+                                    <form action="{{ route('service-provider.products.destroy', $product->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this product?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

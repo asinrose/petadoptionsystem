@@ -100,6 +100,16 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(
     Route::delete('/admin/pets/{pet}', [App\Http\Controllers\AdminController::class , 'destroyPet'])->name('admin.pets.destroy');
     Route::patch('/admin/pets/{pet}/status', [App\Http\Controllers\AdminController::class , 'updatePetStatus'])->name('admin.pets.update_status');
 
+    // Admin Users Management
+    Route::get('/admin/users/export', [App\Http\Controllers\AdminController::class , 'exportUsers'])->name('admin.users.export');
+    Route::patch('/admin/users/{user}', [App\Http\Controllers\AdminController::class , 'updateUser'])->name('admin.users.update');
+
+    // Admin Adoption Requests
+    Route::get('/admin/adoptions', [App\Http\Controllers\AdminController::class , 'adoptions'])->name('admin.adoptions');
+    Route::patch('/admin/adoptions/{request}/status', [App\Http\Controllers\AdminController::class , 'updateAdoptionStatus'])->name('admin.adoptions.update_status');
+
+
+
     // Admin Products & Orders
     Route::get('/admin/products', [App\Http\Controllers\AdminController::class , 'products'])->name('admin.products');
     Route::get('/admin/orders', [App\Http\Controllers\AdminController::class , 'orders'])->name('admin.orders');

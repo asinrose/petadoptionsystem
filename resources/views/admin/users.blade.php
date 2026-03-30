@@ -96,14 +96,14 @@
                     <a href="{{ route('admin.pets') }}">
                         <i class="fas fa-paw"></i> Pet Management
                     </a>
-                    <a href="#">
+                    <a href="{{ route('admin.products') }}">
+                        <i class="fas fa-box-open"></i> Products
+                    </a>
+                    <a href="{{ route('admin.orders') }}">
+                        <i class="fas fa-shopping-cart"></i> Orders
+                    </a>
+                    <a href="{{ route('admin.adoptions') }}">
                         <i class="fas fa-hand-holding-heart"></i> Adoptions
-                    </a>
-                    <a href="#">
-                        <i class="fas fa-briefcase"></i> Service Providers
-                    </a>
-                    <a href="#">
-                        <i class="fas fa-cog"></i> Settings
                     </a>
                     
                     <hr class="my-3">
@@ -122,9 +122,9 @@
             <div class="col-lg-9">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h4 class="fw-bold mb-0">User Management</h4>
-                    <button class="btn btn-outline-primary rounded-pill px-4">
+                    <a href="{{ route('admin.users.export') }}" class="btn btn-outline-primary rounded-pill px-4">
                         <i class="fas fa-download me-2"></i> Export Report
-                    </button>
+                    </a>
                 </div>
                 
                 <div class="table-card">
@@ -143,6 +143,7 @@
                             <tbody>
                                 @foreach($users as $user)
                                 <tr>
+                                    <td>
                                         <div class="d-flex align-items-center">
                                             <img src="{{ $user->profile_photo ? asset('images/'.$user->profile_photo) : 'https://ui-avatars.com/api/?name='.urlencode($user->name) }}" class="user-avatar me-3">
                                             <span class="fw-bold">{{ $user->name }}</span>
@@ -156,15 +157,47 @@
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->created_at->format('M d, Y') }}</td>
                                     <td>
-                                        <span class="badge bg-success rounded-pill">Active</span>
+                                        <span class="badge bg-{{ strtolower($user->status) === 'inactive' ? 'danger' : 'success' }} rounded-pill">
+                                            {{ ucfirst($user->status ?? 'Active') }}
+                                        </span>
                                     </td>
                                     <td class="text-end">
-                                        <button class="btn btn-sm btn-outline-secondary">
+                                        <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editUserModal{{ $user->id }}">
                                             <i class="fas fa-edit"></i>
                                         </button>
                                     </td>
                                 </tr>
+
+                                <!-- Edit User Modal -->
+                                <div class="modal fade" id="editUserModal{{ $user->id }}" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content border-0 rounded-4 shadow">
+                                            <div class="modal-header border-bottom">
+                                                <h5 class="modal-title fw-bold">Edit User - {{ $user->name }}</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <form action="{{ route('admin.users.update', $user->id) }}" method="POST">
+                                                @csrf
+                                                @method('PATCH')
+                                                <div class="modal-body p-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label fw-semibold">Account Status</label>
+                                                        <select name="status" class="form-select rounded-3">
+                                                            <option value="active" {{ strtolower($user->status) === 'active' ? 'selected' : '' }}>Active</option>
+                                                            <option value="inactive" {{ strtolower($user->status) === 'inactive' ? 'selected' : '' }}>Inactive / Suspended</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer border-top bg-light rounded-bottom-4">
+                                                    <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Cancel</button>
+                                                    <button type="submit" class="btn btn-primary rounded-pill px-4">Update User</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                                 @endforeach
+
                             </tbody>
                         </table>
                     </div>
