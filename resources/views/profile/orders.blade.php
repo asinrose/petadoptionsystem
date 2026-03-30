@@ -60,7 +60,7 @@
                                             <td class="ps-4 py-3">
                                                 <div class="d-flex align-items-center">
                                                     @if($item->product->image)
-                                                        <img src="{{ Storage::url($item->product->image) }}" class="rounded bg-light object-fit-cover me-3" style="width: 50px; height: 50px;" alt="{{ $item->product->name }}">
+                                                        <img src="{{ asset('images/' . $item->product->image) }}" class="rounded bg-light object-fit-cover me-3" style="width: 50px; height: 50px;" alt="{{ $item->product->name }}">
                                                     @else
                                                         <div class="bg-light rounded d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
                                                             <i class="fas fa-box text-muted opacity-50"></i>

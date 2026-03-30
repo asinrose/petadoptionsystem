@@ -124,7 +124,7 @@
                                     <td>#{{ $product->id }}</td>
                                     <td>
                                         @if($product->image)
-                                            <img src="{{ Storage::url($product->image) }}" alt="{{ $product->name }}" class="rounded" style="width: 40px; height: 40px; object-fit: cover;">
+                                            <img src="{{ asset('images/' . $product->image) }}" alt="{{ $product->name }}" class="rounded" style="width: 40px; height: 40px; object-fit: cover;">
                                         @else
                                             <div class="bg-light rounded d-flex align-items-center justify-content-center text-muted" style="width: 40px; height: 40px;">
                                                 <i class="fas fa-box"></i>
