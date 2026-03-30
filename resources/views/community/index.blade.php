@@ -56,6 +56,24 @@
                                     <small class="text-muted">{{ $post->created_at->diffForHumans() }}</small>
                                 </div>
                             </div>
+                            @if(auth()->id() === $post->user_id)
+                                <div class="dropdown">
+                                    <button class="btn btn-link text-muted p-0 text-decoration-none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fas fa-ellipsis-h"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end border-0 shadow-sm">
+                                        <li>
+                                            <form action="{{ route('community.destroy', $post->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this post?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="dropdown-item text-danger">
+                                                    <i class="far fa-trash-alt me-2"></i> Delete Post
+                                                </button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+                            @endif
                         </div>
 
                         <!-- Post Content -->

@@ -43,6 +43,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/community', [App\Http\Controllers\CommunityController::class , 'store'])->name('community.store');
         Route::post('/community/{post}/comment', [App\Http\Controllers\CommunityController::class , 'comment'])->name('community.comment');
         Route::post('/community/{post}/like', [App\Http\Controllers\CommunityController::class , 'toggleLike'])->name('community.like');
+        Route::delete('/community/{post}', [App\Http\Controllers\CommunityController::class , 'destroy'])->name('community.destroy');
 
         // Favorites
         Route::post('/favorites/{pet}', [App\Http\Controllers\FavoriteController::class , 'toggle'])->name('favorite.toggle');

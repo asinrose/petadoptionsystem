@@ -77,4 +77,15 @@ class CommunityController extends Controller
             return back()->with('success', 'Post liked');
         }
     }
+
+    public function destroy(CommunityPost $post)
+    {
+        if (Auth::id() !== $post->user_id) {
+            return back()->with('error', 'Unauthorized access');
+        }
+
+        $post->delete();
+
+        return back()->with('success', 'Post deleted successfully!');
+    }
 }
