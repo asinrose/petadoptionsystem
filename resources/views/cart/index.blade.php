@@ -34,7 +34,7 @@
                             <!-- Product Image -->
                             <div class="flex-shrink-0 me-4">
                                 @if($item->product->image)
-                                    <img src="{{ asset('images/' . $item->product->image) }}" class="rounded-3 object-fit-cover" alt="{{ $item->product->name }}" style="width: 100px; height: 100px;">
+                                    <img src="{{ Storage::url($item->product->image) }}" class="rounded-3 object-fit-cover" alt="{{ $item->product->name }}" style="width: 100px; height: 100px;">
                                 @else
                                     <div class="bg-light rounded-3 d-flex align-items-center justify-content-center" style="width: 100px; height: 100px;">
                                         <i class="fas fa-box fa-2x text-muted opacity-50"></i>
