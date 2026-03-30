@@ -106,7 +106,7 @@
             <div class="col-lg-8">
                 <div class="detail-card">
                     <div class="pet-image-container">
-                        <img src="{{ $pet->image ? asset('storage/'.$pet->image) : 'https://placehold.co/800x600?text=No+Image' }}" class="pet-hero-img" alt="{{ $pet->name }}">
+                        <img src="{{ $pet->image ? asset('images/'.$pet->image) : 'https://placehold.co/800x600?text=No+Image' }}" class="pet-hero-img" alt="{{ $pet->name }}">
                         <span class="position-absolute top-0 end-0 m-4 badge bg-white text-primary shadow px-4 py-2 rounded-pill fs-6">
                             {{ ucfirst($pet->status) }}
                         </span>
@@ -238,7 +238,7 @@
                     <div class="d-flex align-items-center mb-3">
                         <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3 overflow-hidden shadow-sm" style="width: 50px; height: 50px;">
                             @if($pet->user->profile_photo)
-                                <img src="{{ asset('storage/' . $pet->user->profile_photo) }}" alt="{{ $pet->user->name }}" class="w-100 h-100 object-fit-cover">
+                                <img src="{{ asset('images/' . $pet->user->profile_photo) }}" alt="{{ $pet->user->name }}" class="w-100 h-100 object-fit-cover">
                             @else
                                 <i class="fas fa-user fs-4"></i>
                             @endif

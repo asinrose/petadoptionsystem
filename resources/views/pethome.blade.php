@@ -44,7 +44,7 @@
             <div class="col-md-6 col-lg-4">
                 <div class="card h-100 shadow-sm border-0 overflow-hidden">
                     <div class="position-relative">
-                        <img src="{{ $pet->image ? asset('storage/'.$pet->image) : 'https://placehold.co/600x400?text=No+Image' }}" class="card-img-top" alt="{{ $pet->name }}" style="height: 250px; object-fit: cover;">
+                        <img src="{{ $pet->image ? asset('images/'.$pet->image) : 'https://placehold.co/600x400?text=No+Image' }}" class="card-img-top" alt="{{ $pet->name }}" style="height: 250px; object-fit: cover;">
                         <span class="position-absolute top-0 end-0 m-3 badge bg-white text-primary shadow-sm px-3 py-2 rounded-pill">
                             {{ ucfirst($pet->status) }}
                         </span>

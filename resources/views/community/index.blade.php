@@ -14,7 +14,7 @@
             <div class="card border-0 shadow-sm rounded-4 mb-4">
                 <div class="card-body p-4">
                     <div class="d-flex">
-                        <img src="{{ auth()->user()->profile_photo ? asset('storage/' . auth()->user()->profile_photo) : 'https://ui-avatars.com/api/?name='.urlencode(auth()->user()->name) }}" 
+                        <img src="{{ auth()->user()->profile_photo ? asset('images/' . auth()->user()->profile_photo) : 'https://ui-avatars.com/api/?name='.urlencode(auth()->user()->name) }}" 
                              class="rounded-circle me-3" width="50" height="50" alt="User" style="object-fit: cover;">
                         <div class="flex-grow-1">
                             <form action="{{ route('community.store') }}" method="POST" enctype="multipart/form-data">
@@ -49,7 +49,7 @@
                         <!-- Post Header -->
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <div class="d-flex align-items-center">
-                                <img src="{{ $post->user->profile_photo ? asset('storage/' . $post->user->profile_photo) : 'https://ui-avatars.com/api/?name='.urlencode($post->user->name) }}" 
+                                <img src="{{ $post->user->profile_photo ? asset('images/' . $post->user->profile_photo) : 'https://ui-avatars.com/api/?name='.urlencode($post->user->name) }}" 
                                      class="rounded-circle me-3" width="45" height="45" alt="User" style="object-fit: cover;">
                                 <div>
                                     <h6 class="fw-bold mb-0">{{ $post->user->name }}</h6>
@@ -65,10 +65,10 @@
                         @if($post->media_path)
                             <div class="mb-4 rounded-4 overflow-hidden bg-light text-center border">
                                 @if($post->media_type == 'image')
-                                    <img src="{{ Storage::url($post->media_path) }}" class="img-fluid w-100" alt="Post Default Image" style="max-height: 600px; object-fit: contain; background: #f8f9fa;">
+                                    <img src="{{ asset('images/' . $post->media_path) }}" class="img-fluid w-100" alt="Post Default Image" style="max-height: 600px; object-fit: contain; background: #f8f9fa;">
                                 @elseif($post->media_type == 'video')
                                     <video controls class="w-100" style="max-height: 600px; background: #000;">
-                                        <source src="{{ Storage::url($post->media_path) }}">
+                                        <source src="{{ asset('images/' . $post->media_path) }}">
                                         Your browser does not support the video tag.
                                     </video>
                                 @endif
@@ -96,7 +96,7 @@
                             <div class="bg-light rounded-3 p-3">
                                 @foreach($post->comments as $comment)
                                     <div class="d-flex mb-3">
-                                        <img src="{{ $comment->user->profile_photo ? asset('storage/' . $comment->user->profile_photo) : 'https://ui-avatars.com/api/?name='.urlencode($comment->user->name) }}" 
+                                        <img src="{{ $comment->user->profile_photo ? asset('images/' . $comment->user->profile_photo) : 'https://ui-avatars.com/api/?name='.urlencode($comment->user->name) }}" 
                                              class="rounded-circle me-2" width="30" height="30" alt="User" style="object-fit: cover;">
                                         <div class="flex-grow-1">
                                             <div class="bg-white p-2 rounded-3 shadow-sm">

@@ -156,7 +156,7 @@
                                 <tr>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <img src="{{ asset('storage/'.$pet->image) }}" class="pet-avatar me-3">
+                                            <img src="{{ asset('images/'.$pet->image) }}" class="pet-avatar me-3">
                                             <div>
                                                 <span class="fw-bold d-block">{{ $pet->name }}</span>
                                                 <small class="text-muted">{{ $pet->age }} old</small>

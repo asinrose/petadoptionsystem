@@ -118,7 +118,7 @@
                         <div class="product-img-wrapper">
                             <span class="price-tag">${{ number_format($product->price, 2) }}</span>
                             @if($product->image)
-                                <img src="{{ Storage::url($product->image) }}" class="product-img" alt="{{ $product->name }}">
+                                <img src="{{ asset('images/' . $product->image) }}" class="product-img" alt="{{ $product->name }}">
                             @else
                                 <div class="d-flex align-items-center justify-content-center h-100 bg-light">
                                     <i class="fas fa-box fa-4x text-muted opacity-25"></i>

@@ -127,7 +127,7 @@
                         <div class="col-md-6 col-lg-4">
                             <div class="card h-100 shadow-sm border-0 overflow-hidden">
                                 <div class="position-relative">
-                                    <img src="{{ $pet->image ? asset('storage/'.$pet->image) : 'https://placehold.co/600x400?text=No+Image' }}" class="card-img-top" alt="{{ $pet->name }}" style="height: 200px; object-fit: cover;">
+                                    <img src="{{ $pet->image ? asset('images/'.$pet->image) : 'https://placehold.co/600x400?text=No+Image' }}" class="card-img-top" alt="{{ $pet->name }}" style="height: 200px; object-fit: cover;">
                                     
                                     <form action="{{ route('favorite.toggle', $pet->id) }}" method="POST" class="position-absolute top-0 start-0 m-2">
                                         @csrf

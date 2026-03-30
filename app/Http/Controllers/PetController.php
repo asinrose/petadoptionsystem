@@ -33,7 +33,7 @@ class PetController extends Controller
             'adoption_fee' => 'nullable|numeric|min:0',
         ]);
 
-        $imagePath = $request->file('image')->store('pets', 'public');
+        $imagePath = $request->file('image')->store('pets', 'public_images');
 
         \App\Models\Pet::create([
             'user_id' => auth()->id(),
@@ -77,9 +77,7 @@ class PetController extends Controller
             abort(403);
         }
 
-        if ($pet->image) {
-            \Illuminate\Support\Facades\Storage::disk('public')->delete($pet->image);
-        }
+            \Illuminate\Support\Facades\Storage::disk('public_images')->delete($pet->image);
 
         $pet->delete();
 

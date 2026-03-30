@@ -182,7 +182,7 @@
                     @foreach ($pets as $pet)
                     <div class="pet-card">
                         <div class="d-flex flex-column flex-md-row gap-4">
-                            <img src="{{ asset('storage/' . $pet->image) }}" class="pet-image" alt="{{ $pet->name }}">
+                            <img src="{{ asset('images/' . $pet->image) }}" class="pet-image" alt="{{ $pet->name }}">
                             
                             <div class="flex-grow-1">
                                 <div class="d-flex justify-content-between align-items-start">

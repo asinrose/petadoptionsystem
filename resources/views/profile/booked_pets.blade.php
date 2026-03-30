@@ -147,7 +147,7 @@
                         <div class="row align-items-center">
                             <!-- Pet Info Col -->
                             <div class="col-md-5 mb-3 mb-md-0 d-flex align-items-center">
-                                <img src="{{ $application->pet->image ? asset('storage/'.$application->pet->image) : 'https://placehold.co/100x100?text=Pet' }}" 
+                                <img src="{{ $application->pet->image ? asset('images/'.$application->pet->image) : 'https://placehold.co/100x100?text=Pet' }}" 
                                      alt="{{ $application->pet->name }}"
                                      class="rounded-circle me-3 object-fit-cover shadow-sm"
                                      style="width: 70px; height: 70px;">

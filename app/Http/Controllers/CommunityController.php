@@ -28,7 +28,7 @@ class CommunityController extends Controller
 
         if ($request->hasFile('media')) {
             $file = $request->file('media');
-            $mediaPath = $file->store('community_media', 'public');
+            $mediaPath = $file->store('community_media', 'public_images');
             $mimeType = $file->getMimeType();
 
             if (str_starts_with($mimeType, 'image/')) {

@@ -149,7 +149,7 @@
                 <!-- PROFILE HEADER -->
                 <div class="d-flex align-items-center mb-5">
                     <img src="{{ $user->profile_photo
-                        ? asset('storage/'.$user->profile_photo)
+                        ? asset('images/'.$user->profile_photo)
                         : 'https://ui-avatars.com/api/?name='.urlencode($user->name) }}"
                          class="profile-avatar me-4">
 

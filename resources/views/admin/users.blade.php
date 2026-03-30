@@ -143,9 +143,8 @@
                             <tbody>
                                 @foreach($users as $user)
                                 <tr>
-                                    <td>
                                         <div class="d-flex align-items-center">
-                                            <img src="{{ $user->profile_photo ? asset('storage/'.$user->profile_photo) : 'https://ui-avatars.com/api/?name='.urlencode($user->name) }}" class="user-avatar me-3">
+                                            <img src="{{ $user->profile_photo ? asset('images/'.$user->profile_photo) : 'https://ui-avatars.com/api/?name='.urlencode($user->name) }}" class="user-avatar me-3">
                                             <span class="fw-bold">{{ $user->name }}</span>
                                         </div>
                                     </td>

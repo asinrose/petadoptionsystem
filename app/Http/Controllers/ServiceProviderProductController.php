@@ -41,7 +41,7 @@ class ServiceProviderProductController extends Controller
 
         $imagePath = null;
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('products', 'public');
+            $imagePath = $request->file('image')->store('products', 'public_images');
         }
 
         $provider = auth()->user()->serviceProvider;
@@ -84,8 +84,11 @@ class ServiceProviderProductController extends Controller
 
         $imagePath = $product->image;
         if ($request->hasFile('image')) {
-            // Delete old image if needed, for simplicity just overwrite path
-            $imagePath = $request->file('image')->store('products', 'public');
+            // Delete old image if exists
+            if ($product->image) {
+                \Illuminate\Support\Facades\Storage::disk('public_images')->delete($product->image);
+            }
+            $imagePath = $request->file('image')->store('products', 'public_images');
         }
 
         $product->update([
@@ -103,6 +106,11 @@ class ServiceProviderProductController extends Controller
     public function destroy(string $id)
     {
         $product = \App\Models\Product::where('service_provider_id', auth()->user()->serviceProvider->id)->findOrFail($id);
+        
+        if ($product->image) {
+            \Illuminate\Support\Facades\Storage::disk('public_images')->delete($product->image);
+        }
+
         $product->delete();
         return redirect()->route('service-provider.products.index')->with('success', 'Product deleted successfully.');
     }

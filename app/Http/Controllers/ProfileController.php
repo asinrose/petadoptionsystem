@@ -43,12 +43,12 @@ class ProfileController extends Controller
 
             // Delete old photo if exists
             if ($user->profile_photo) {
-                Storage::delete($user->profile_photo);
+                Storage::disk('public_images')->delete($user->profile_photo);
             }
 
             // Store new photo
             $user->profile_photo =
-                $request->file('profile_photo')->store('profile-photos', 'public');
+                $request->file('profile_photo')->store('profile-photos', 'public_images');
         }
 
         // Reset email verification if email changed
@@ -88,7 +88,7 @@ class ProfileController extends Controller
         Auth::logout();
 
         if ($user->profile_photo) {
-            Storage::delete($user->profile_photo);
+            Storage::disk('public_images')->delete($user->profile_photo);
         }
 
         $user->delete();

@@ -36,7 +36,7 @@
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 border-0 shadow-sm glass-card">
                         @if($product->image)
-                            <img src="{{ Storage::url($product->image) }}" class="card-img-top" alt="{{ $product->name }}" style="height: 200px; object-fit: cover;">
+                            <img src="{{ asset('images/' . $product->image) }}" class="card-img-top" alt="{{ $product->name }}" style="height: 200px; object-fit: cover;">
                         @else
                             <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 200px;">
                                 <i class="fas fa-box fa-3x text-muted opacity-50"></i>

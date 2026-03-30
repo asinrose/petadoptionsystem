@@ -19,7 +19,7 @@
         <div class="col-md-6">
             <div class="card border-0 shadow-sm rounded-4 overflow-hidden h-100">
                 @if($product->image)
-                    <img src="{{ Storage::url($product->image) }}" alt="{{ $product->name }}" class="img-fluid w-100 h-100" style="object-fit: cover; min-height: 400px;">
+                    <img src="{{ asset('images/' . $product->image) }}" alt="{{ $product->name }}" class="img-fluid w-100 h-100" style="object-fit: cover; min-height: 400px;">
                 @else
                     <div class="d-flex align-items-center justify-content-center h-100 bg-light" style="min-height: 400px;">
                         <i class="fas fa-box fa-5x text-muted opacity-25"></i>
