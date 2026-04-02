@@ -28,7 +28,7 @@
                             <div class="d-flex justify-content-between align-items-start mb-3">
                                 <h5 class="card-title fw-bold text-dark">{{ $service->name }}</h5>
                                 <span class="badge bg-light text-primary rounded-pill px-3">
-                                    ${{ number_format($service->price, 2) }}
+                                    ₹{{ number_format($service->price, 2) }}
                                 </span>
                             </div>
                             <p class="card-text text-muted small mb-3">

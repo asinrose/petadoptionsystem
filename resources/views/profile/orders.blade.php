@@ -72,9 +72,9 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td class="text-center py-3">${{ number_format($item->price, 2) }}</td>
+                                            <td class="text-center py-3">₹{{ number_format($item->price, 2) }}</td>
                                             <td class="text-center py-3">{{ $item->quantity }}</td>
-                                            <td class="pe-4 text-end fw-bold text-primary py-3">${{ number_format($item->price * $item->quantity, 2) }}</td>
+                                            <td class="pe-4 text-end fw-bold text-primary py-3">₹{{ number_format($item->price * $item->quantity, 2) }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -93,7 +93,7 @@
                             </div>
                             <div class="col-md-4 text-md-end">
                                 <span class="text-muted small text-uppercase fw-bold me-2">Order Total</span>
-                                <span class="fs-4 fw-bold text-primary">${{ number_format($order->total_amount, 2) }}</span>
+                                <span class="fs-4 fw-bold text-primary">₹{{ number_format($order->total_amount, 2) }}</span>
                             </div>
                         </div>
                     </div>

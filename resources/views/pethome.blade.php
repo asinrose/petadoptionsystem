@@ -79,7 +79,7 @@
                             @if($pet->adoption_type == 'free')
                                 <span class="badge bg-primary">Free Adoption</span>
                             @else
-                                <span class="badge bg-warning text-dark">Fee: ${{ number_format($pet->adoption_fee, 2) }}</span>
+                                <span class="badge bg-warning text-dark">Fee: ₹{{ number_format($pet->adoption_fee, 2) }}</span>
                             @endif
                         </div>
 

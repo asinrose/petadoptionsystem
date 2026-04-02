@@ -103,6 +103,25 @@ class ServiceProviderProductController extends Controller
         return redirect()->route('service-provider.products.index')->with('success', 'Product updated successfully.');
     }
 
+    public function orders()
+    {
+        $provider = auth()->user()->serviceProvider;
+        if (!$provider) {
+            return redirect()->route('service-provider.dashboard')->with('error', 'Service Provider profile not found.');
+        }
+
+        // Get all product IDs owned by this provider
+        $productIds = \App\Models\Product::where('service_provider_id', $provider->id)->pluck('id');
+
+        // Fetch OrderItems for these products
+        $orderItems = \App\Models\OrderItem::with(['order.user', 'product'])
+            ->whereIn('product_id', $productIds)
+            ->latest()
+            ->paginate(10);
+
+        return view('service_provider.products.orders', compact('orderItems'));
+    }
+
     public function destroy(string $id)
     {
         $product = \App\Models\Product::where('service_provider_id', auth()->user()->serviceProvider->id)->findOrFail($id);

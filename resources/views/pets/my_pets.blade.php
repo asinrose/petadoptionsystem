@@ -236,7 +236,7 @@
                                         <span class="detail-label">Adoption</span>
                                         <span class="detail-value">
                                             {{ ucfirst($pet->adoption_type) }} 
-                                            @if($pet->adoption_type == 'fee') <span class="text-success fw-bold">${{ $pet->adoption_fee }}</span> @endif
+                                            @if($pet->adoption_type == 'fee') <span class="text-success fw-bold">₹{{ $pet->adoption_fee }}</span> @endif
                                         </span>
                                     </div>
                                 </div>

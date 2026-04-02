@@ -214,7 +214,7 @@
                                     {{ ucfirst($booking->status) }}
                                 </span>
                                 <div class="booking-amount mt-2">
-                                    ${{ number_format($booking->total_price, 2) }}
+                                    ₹{{ number_format($booking->total_price, 2) }}
                                 </div>
                             </div>
                         </div>

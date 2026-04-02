@@ -81,6 +81,9 @@ Route::middleware(['auth', 'service_provider'])->group(function () {
     Route::get('/service-provider/services/create', [App\Http\Controllers\ServiceProviderServiceController::class , 'create'])->name('service-provider.services.create');
     Route::post('/service-provider/services', [App\Http\Controllers\ServiceProviderServiceController::class , 'store'])->name('service-provider.services.store');
 
+    // Product orders view
+    Route::get('/service-provider/product-orders', [App\Http\Controllers\ServiceProviderProductController::class, 'orders'])->name('service-provider.product-orders.index');
+
     // Product Management
     Route::resource('/service-provider/products', App\Http\Controllers\ServiceProviderProductController::class)->names([
         'index' => 'service-provider.products.index',

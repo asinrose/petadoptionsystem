@@ -23,7 +23,7 @@
                         
                         <div class="mb-3">
                             <label class="form-label small text-muted text-uppercase fw-bold">Date</label>
-                            <input type="date" name="date" class="form-control rounded-pill" value="{{ request('date') }}" required>
+                            <input type="date" name="date" class="form-control rounded-pill" value="{{ request('date') }}" min="{{ date('Y-m-d') }}" required>
                         </div>
 
                         <div class="row g-2 mb-3">
@@ -93,19 +93,26 @@
                                     <p class="text-muted small mb-3">{{ Str::limit($service->description, 80) }}</p>
                                     
                                     <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <span class="fw-bold h5 mb-0">${{ $service->price }}</span>
+                                        <span class="fw-bold h5 mb-0">₹{{ $service->price }}</span>
                                         <span class="badge bg-light text-dark rounded-pill">
                                             <i class="fas fa-clock me-1"></i> {{ $service->duration_minutes }}m
                                         </span>
                                     </div>
 
-                                    <button type="button" 
-                                            class="btn btn-outline-primary w-100 rounded-pill"
-                                            @disabled(!(request('date') && request('start_time') && request('end_time')))
-                                            data-bs-toggle="modal" 
-                                            data-bs-target="#bookModal{{ $service->id }}">
-                                        {{ (request('date') && request('start_time') && request('end_time')) ? 'Book Now' : 'Select Date & Time' }}
-                                    </button>
+                                    @if(request('date') && request('start_time') && request('end_time'))
+                                        <button type="button" 
+                                                class="btn btn-primary w-100 rounded-pill fw-bold"
+                                                data-bs-toggle="modal" 
+                                                data-bs-target="#bookModal{{ $service->id }}">
+                                            Book Now
+                                        </button>
+                                    @else
+                                        <button type="button" 
+                                                class="btn btn-outline-primary w-100 rounded-pill fw-bold"
+                                                onclick="document.querySelector('input[name=\'date\']').scrollIntoView({behavior: 'smooth', block: 'center'}); document.querySelector('input[name=\'date\']').focus();">
+                                            Select Date & Time
+                                        </button>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -138,7 +145,7 @@
                                                 </div>
                                                 <div class="text-end">
                                                     <small class="text-muted d-block uppercase">Price/Hr</small>
-                                                    <strong class="text-primary">${{ $service->price }}</strong>
+                                                    <strong class="text-primary">₹{{ $service->price }}</strong>
                                                 </div>
                                             </div>
 
@@ -189,7 +196,7 @@
                                                     <span class="fw-bold text-primary d-block">Total Amount Payable</span>
                                                     <small class="text-muted">For {{ $duration / 60 }} Hours</small>
                                                 </div>
-                                                <span class="h4 fw-bold text-primary mb-0">${{ number_format($totalPrice, 2) }}</span>
+                                                <span class="h4 fw-bold text-primary mb-0">₹{{ number_format($totalPrice, 2) }}</span>
                                             </div>
                                         </div>
                                         <div class="modal-footer border-0">

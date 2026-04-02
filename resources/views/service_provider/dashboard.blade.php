@@ -288,6 +288,11 @@
                     <i class="fas fa-chevron-right text-muted small"></i>
                 </a>
 
+                <a href="{{ route('service-provider.product-orders.index') }}" class="action-btn">
+                    <span><i class="fas fa-shopping-cart me-2 text-primary"></i> View Product Orders</span>
+                    <i class="fas fa-chevron-right text-muted small"></i>
+                </a>
+
                 <a href="{{ route('profile.edit') }}" class="action-btn">
                     <span><i class="fas fa-user-edit me-2 text-warning"></i> Edit Profile</span>
                     <i class="fas fa-chevron-right text-muted small"></i>
@@ -350,8 +355,8 @@
                             <p class="fw-bold mb-0">{{ $booking->service->name }}</p>
                         </div>
                         <div class="col-6">
-                            <label class="text-muted small text-uppercase fw-bold mb-1">Total Price</label>
-                            <p class="fw-bold text-primary mb-0">${{ number_format($booking->total_price, 2) }}</p>
+                            <small class="text-muted d-block text-uppercase">Total Earned</small>
+                            <p class="fw-bold text-primary mb-0">₹{{ number_format($booking->total_price, 2) }}</p>
                         </div>
                         <div class="col-6">
                             <label class="text-muted small text-uppercase fw-bold mb-1">Date</label>

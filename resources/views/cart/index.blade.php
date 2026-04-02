@@ -48,10 +48,10 @@
                                     <h5 class="fw-bold mb-0">
                                         <a href="{{ route('shop.show', $item->product) }}" class="text-dark text-decoration-none hover-primary">{{ $item->product->name }}</a>
                                     </h5>
-                                    <span class="fs-5 fw-bold text-primary">${{ number_format($item->product->price * $item->quantity, 2) }}</span>
+                                    <span class="fs-5 fw-bold text-primary">₹{{ number_format($item->product->price * $item->quantity, 2) }}</span>
                                 </div>
                                 
-                                <p class="text-muted small mb-3">Unit Price: ${{ number_format($item->product->price, 2) }}</p>
+                                <p class="text-muted small mb-3">Unit Price: ₹{{ number_format($item->product->price, 2) }}</p>
 
                                 <div class="d-flex justify-content-between align-items-center">
                                     <form action="{{ route('cart.update', $item) }}" method="POST" class="d-flex align-items-center">
@@ -93,7 +93,7 @@
                         
                         <div class="d-flex justify-content-between mb-3">
                             <span class="text-muted">Subtotal ({{ $cartItems->sum('quantity') }} items)</span>
-                            <span class="fw-bold">${{ number_format($total, 2) }}</span>
+                            <span class="fw-bold">₹{{ number_format($total, 2) }}</span>
                         </div>
                         
                         <div class="d-flex justify-content-between mb-3">
@@ -105,7 +105,7 @@
                         
                         <div class="d-flex justify-content-between mb-5">
                             <span class="fs-5 fw-bold">Total</span>
-                            <span class="fs-4 fw-bold text-primary">${{ number_format($total, 2) }}</span>
+                            <span class="fs-4 fw-bold text-primary">₹{{ number_format($total, 2) }}</span>
                         </div>
                         
                         <a href="{{ route('cart.checkout') }}" class="btn btn-primary btn-lg w-100 rounded-pill fw-bold shadow">

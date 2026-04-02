@@ -163,7 +163,7 @@
                         </div>
                     @else
                         <div class="alert alert-warning fs-5 fw-bold py-3 rounded-3 mb-4 text-dark">
-                            <i class="fas fa-tag me-2"></i> Adoption Fee: ${{ number_format($pet->adoption_fee, 2) }}
+                            <i class="fas fa-tag me-2"></i> Adoption Fee: ₹{{ number_format($pet->adoption_fee, 2) }}
                         </div>
                     @endif
 

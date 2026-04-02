@@ -71,7 +71,7 @@
                                         </td>
                                         <td class="py-4">
                                             <span class="fw-bold text-dark d-block mb-1">{{ $booking->service->name }}</span>
-                                            <span class="badge bg-light text-primary rounded-pill px-3 py-1 fw-semibold">${{ number_format($booking->total_price, 2) }}</span>
+                                            <span class="badge bg-light text-primary rounded-pill px-3 py-1 fw-semibold">₹{{ number_format($booking->total_price, 2) }}</span>
                                         </td>
                                         <td class="py-4">
                                             <div class="fw-bold text-dark mb-1"><i class="far fa-calendar-alt text-primary me-2 opacity-75"></i> {{ \Carbon\Carbon::parse($booking->date)->format('M d, Y') }}</div>

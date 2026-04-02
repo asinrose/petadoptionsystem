@@ -38,7 +38,7 @@
                 
                 <h1 class="display-5 fw-bold mb-3">{{ $product->name }}</h1>
                 
-                <h2 class="text-primary fw-bold mb-4">${{ number_format($product->price, 2) }}</h2>
+                <h2 class="text-primary fw-bold mb-4">₹{{ number_format($product->price, 2) }}</h2>
                 
                 <div class="mb-4 text-muted" style="line-height: 1.8;">
                     {{ $product->description }}
